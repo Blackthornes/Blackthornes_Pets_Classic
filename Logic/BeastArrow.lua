@@ -411,8 +411,9 @@ function BeastArrow.Note(target, entry)
     if target.here then return L["No exact spot for it in this zone yet"], "accent" end
     if target.area then return L["The middle of the zone, since there's no exact spot yet"], "accent" end
     if entry and entry.place then return L["Pet trainer"], "good" end
-    local why = ns.Compendium and ns.Compendium.ForeverText and ns.Compendium.ForeverText(entry)
-    if why then return why, "good" end
+    -- Classic Era names no Forever source: a spot of your own tame is where
+    -- you tamed it.
+    if entry and entry.forever == "mine" then return L["Where you tamed it"], "good" end
     return L["Where it lived in Classic"], "muted"
 end
 

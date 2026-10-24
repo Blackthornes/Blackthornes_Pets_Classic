@@ -248,11 +248,13 @@ clock = clock + 5
 suite.check("close by is You're there", Arrow:State(clock).mode == "arrived")
 where = { map = 37, x = 0.45, y = 0.50 }
 
--- Forever's spot wins and is named.
+-- Your own tame's spot wins and says so; nothing names Forever.
 local copy = {}
 for key, value in pairs(fang) do copy[key] = value end
+copy.forever = "mine"
+suite.check("your own tame's spot says so", Arrow.Note({ exact = true }, copy) == "Where you tamed it")
 copy.forever = "seen"
-suite.check("a Forever spot says so", Arrow.Note({ exact = true }, copy) == "Seen on Forever")
+suite.check("no note names Forever", not tostring(Arrow.Note({ exact = true }, copy)):find("Forever"))
 
 --------------------------------------------------------------------------------
 -- No spot, inside, far

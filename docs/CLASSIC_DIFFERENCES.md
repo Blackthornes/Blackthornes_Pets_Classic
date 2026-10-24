@@ -58,9 +58,19 @@ Every Forever catch-up checks this note first, before sorting commits into
   touches these tools keeps Classic's word. Tested in
   `tools/test_announce_discord.py` and `tools/test_post_general.py`.
 
+### No Forever words in the Compendium
+- The owner asked (2026-10-24) for no "Forever" a player can see. The
+  Compendium has no "Seen on Forever" tick box (a saved `foreverOnly` stays
+  in the save, unread; `Compendium:List` still takes it), its hint line is
+  only "Click a beast to pin it on your map, or Shift-click to point the
+  arrow at it.", rows and tooltips carry no green Forever mark or line, and
+  the speed line no longer says "(seen on Forever)". The beast arrow's note
+  for your own tame is "Where you tamed it" (`BeastArrow.Note`), never
+  `Compendium.ForeverText`, which stays for clean merges. A catch-up that
+  brings any of these back keeps Classic's. Tested in
+  `tools/test_beastarrow.lua`.
+
 ## Not yet done
-- The Compendium still says "Seen on Forever" with a hint line. New wording
-  waits on the owner's OK.
 - The rest of the plan (Era's pet calls as fallbacks, the probe in Era,
   data made again from Era's tables, the sister lists) is in the project's
   `pets-classic-plan.md`, one small PR each. Each step adds its line here.

@@ -67,6 +67,7 @@ L["No exact spot for it in this zone yet"] = "Pas encore d'endroit précis dans 
 L["The middle of the zone, since there's no exact spot yet"] =
     "Le milieu de la zone, car il n'y a pas encore d'endroit précis"
 L["Where it lived in Classic"] = "Où elle vivait dans Classic"
+L["Where you tamed it"] = "Là où tu l'as apprivoisée"
 L["Far away"] = "Très loin"
 L["In %s"] = "Dans %s"
 L["this zone"] = "cette zone"
@@ -173,8 +174,8 @@ L["Can't see you here"] = "Impossible de te voir ici"
 L["The game won't say where you are"] = "Le jeu ne dit pas où tu es"
 
 -- The compendium window
-L["Click a beast to pin it on your map, or Shift-click to point the arrow at it. %s marks what WoW: Forever has shown."] =
-    "Clique sur une bête pour la marquer sur ta carte, ou fais Maj-clic pour que la flèche la montre. %s marque ce que WoW: Forever a montré."
+L["Click a beast to pin it on your map, or Shift-click to point the arrow at it."] =
+    "Clique sur une bête pour la marquer sur ta carte, ou fais Maj-clic pour que la flèche la montre."
 L["Settings"] = "Options"
 L["Arrow"] = "Flèche"
 L["All families"] = "Toutes les familles"
@@ -184,7 +185,6 @@ L["Only beasts at or below your level."] = "Seulement les bêtes de ton niveau o
 L["Rares only"] = "Rares seulement"
 L["Teaches me something new"] = "M'apprend quelque chose de nouveau"
 L["Only beasts that teach a skill you don't have yet."] = "Seulement les bêtes qui apprennent une technique que tu n'as pas encore."
-L["Only beasts known to live on WoW: Forever."] = "Seulement les bêtes qu'on sait vivre sur WoW: Forever."
 L["Click again to flip it, and once more to go back."] = "Clique encore pour inverser, et une fois de plus pour revenir."
 L["Beast"] = "Bête"
 L["Sort by beast"] = "Trier par bête"
@@ -213,7 +213,6 @@ L["Level %s. You can tame it now."] = "Niveau %s. Tu peux l'apprivoiser maintena
 L["Level %s. You can tame it from level %d."] = "Niveau %s. Tu peux l'apprivoiser dès le niveau %d."
 L["Level %s"] = "Niveau %s"
 L["Attack speed %s"] = "Vitesse d'attaque %s"
-L["Attack speed %s (seen on Forever)"] = "Vitesse d'attaque %s (vue sur Forever)"
 L["Where it lives is not known yet."] = "On ne sait pas encore où elle vit."
 L["Shift-click to point the arrow at it."] = "Fais Maj-clic pour que la flèche la montre."
 L["Also in %s"] = "Aussi dans %s"

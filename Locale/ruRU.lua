@@ -67,6 +67,7 @@ L["No exact spot for it in this zone yet"] = "Точного места в эт�
 L["The middle of the zone, since there's no exact spot yet"] =
     "Середина зоны, потому что точного места пока нет"
 L["Where it lived in Classic"] = "Где он жил в Classic"
+L["Where you tamed it"] = "Где ты его приручил"
 L["Far away"] = "Далеко"
 L["In %s"] = "Зона: %s"
 L["this zone"] = "эта зона"
@@ -173,8 +174,8 @@ L["Can't see you here"] = "Здесь тебя не видно"
 L["The game won't say where you are"] = "Игра не говорит, где ты"
 
 -- The compendium window
-L["Click a beast to pin it on your map, or Shift-click to point the arrow at it. %s marks what WoW: Forever has shown."] =
-    "Щёлкни по зверю, чтобы отметить его на карте, или нажми Shift и щёлкни, чтобы на него указала стрелка. %s отмечает то, что было в WoW: Forever."
+L["Click a beast to pin it on your map, or Shift-click to point the arrow at it."] =
+    "Щёлкни по зверю, чтобы отметить его на карте, или нажми Shift и щёлкни, чтобы на него указала стрелка."
 L["Settings"] = "Настройки"
 L["Arrow"] = "Стрелка"
 L["All families"] = "Все семейства"
@@ -184,7 +185,6 @@ L["Only beasts at or below your level."] = "Только звери твоего
 L["Rares only"] = "Только редкие"
 L["Teaches me something new"] = "Научит новому"
 L["Only beasts that teach a skill you don't have yet."] = "Только звери, которые учат навыку, которого у тебя ещё нет."
-L["Only beasts known to live on WoW: Forever."] = "Только звери, которые точно живут в WoW: Forever."
 L["Click again to flip it, and once more to go back."] = "Щёлкни ещё раз, чтобы перевернуть, и ещё раз, чтобы вернуть."
 L["Beast"] = "Зверь"
 L["Sort by beast"] = "Сортировать по зверю"
@@ -213,7 +213,6 @@ L["Level %s. You can tame it now."] = "Уровень %s. Его можно пр
 L["Level %s. You can tame it from level %d."] = "Уровень %s. Приручить можно с уровня %d."
 L["Level %s"] = "Уровень %s"
 L["Attack speed %s"] = "Скорость атаки %s"
-L["Attack speed %s (seen on Forever)"] = "Скорость атаки %s (замечено на Forever)"
 L["Where it lives is not known yet."] = "Пока неизвестно, где он живёт."
 L["Shift-click to point the arrow at it."] = "Нажми Shift и щёлкни, чтобы на него указала стрелка."
 L["Also in %s"] = "Ещё в: %s"

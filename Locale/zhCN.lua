@@ -66,6 +66,7 @@ L["No exact spot for it in this zone yet"] = "这个区域里还没有它的准�
 L["The middle of the zone, since there's no exact spot yet"] =
     "区域的中间，因为还没有准确位置"
 L["Where it lived in Classic"] = "它在经典旧世里的位置"
+L["Where you tamed it"] = "你驯服它的地方"
 L["Far away"] = "很远"
 L["In %s"] = "在%s"
 L["this zone"] = "这个区域"
@@ -172,8 +173,8 @@ L["Can't see you here"] = "这里看不到你的位置"
 L["The game won't say where you are"] = "游戏没有说你在哪里"
 
 -- The compendium window
-L["Click a beast to pin it on your map, or Shift-click to point the arrow at it. %s marks what WoW: Forever has shown."] =
-    "点击一只野兽就会在地图上标记它，按住 Shift 点击就让箭头指向它。%s 表示 WoW: Forever 里见过的。"
+L["Click a beast to pin it on your map, or Shift-click to point the arrow at it."] =
+    "点击一只野兽就会在地图上标记它，按住 Shift 点击就让箭头指向它。"
 L["Settings"] = "设置"
 L["Arrow"] = "箭头"
 L["All families"] = "所有种类"
@@ -183,7 +184,6 @@ L["Only beasts at or below your level."] = "只显示不高于你等级的野兽
 L["Rares only"] = "只看稀有"
 L["Teaches me something new"] = "能教我新技能"
 L["Only beasts that teach a skill you don't have yet."] = "只显示能教你还没有的技能的野兽。"
-L["Only beasts known to live on WoW: Forever."] = "只显示确定在 WoW: Forever 上有的野兽。"
 L["Click again to flip it, and once more to go back."] = "再点一次反过来排，再点一次恢复原样。"
 L["Beast"] = "野兽"
 L["Sort by beast"] = "按野兽排序"
@@ -212,7 +212,6 @@ L["Level %s. You can tame it now."] = "等级%s。你现在就能驯服它。"
 L["Level %s. You can tame it from level %d."] = "等级%s。你到%d级就能驯服它。"
 L["Level %s"] = "等级%s"
 L["Attack speed %s"] = "攻击速度%s"
-L["Attack speed %s (seen on Forever)"] = "攻击速度%s（在 Forever 上见过）"
 L["Where it lives is not known yet."] = "还不知道它住在哪里。"
 L["Shift-click to point the arrow at it."] = "按住 Shift 点击，让箭头指向它。"
 L["Also in %s"] = "也在%s"
