@@ -51,6 +51,13 @@ Every Forever catch-up checks this note first, before sorting commits into
 - `README.md` names the Classic CurseForge project and says no Forever
   findings ship.
 
+### Discord release posts
+- `tools/announce_discord.py` and `tools/post_general.py` start both
+  posts with "Classic Era: " (their `GAME`), where Forever's start with
+  "Forever: ", so the two games' releases read apart. A catch-up that
+  touches these tools keeps Classic's word. Tested in
+  `tools/test_announce_discord.py` and `tools/test_post_general.py`.
+
 ## Not yet done
 - The Compendium still says "Seen on Forever" with a hint line. New wording
   waits on the owner's OK.
