@@ -29,7 +29,14 @@ comes first, and nothing done here may ever touch the Forever addon. So:
 - Never put Forever's CurseForge ID (1720056) in the TOC:
   `tools/check_release.py` refuses a tag that does. The owner makes the Era
   project himself; its ID goes on the TOC's `X-Curse-Project-ID` line then.
-- The steps still to come (Forever's beasts out, Era's pet calls as
+- Forever's beasts are out (2026-10-24, step 2 of the plan):
+  `Data/ForeverBeasts.lua` and `tools/forever_beasts.py` are gone and the
+  TOC no longer lists the data. `Logic/Compendium.lua` and
+  `Logic/Taming.lua` still read `ns.ForeverBeasts` only when it exists, so
+  a Forever change to them merges cleanly; the Compendium is Classic's list
+  with this account's own tames (`tamedBeasts`, TameRecord) laid over it.
+  `tools/test_compendium.lua` and `tools/test_taming.lua` check it.
+- The steps still to come (Era's pet calls as
   fallbacks, the probe in Era, data made again from Era's tables, the
   sister lists) are in the project's `pets-classic-plan.md`, one small PR
   each.

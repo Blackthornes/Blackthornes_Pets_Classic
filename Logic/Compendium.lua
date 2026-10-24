@@ -8,7 +8,8 @@
 --   1. Classic (Data/Compendium.lua): every tameable beast of patch 1.12.
 --   2. Forever, shipped (Data/ForeverBeasts.lua): where beasts were seen on
 --      Forever (SEEN, by name), beasts tamed there (TAMED, by creature id)
---      and new beasts a Forever source names (FOUND).
+--      and new beasts a Forever source names (FOUND). Classic Era ships
+--      without it, so this layer is empty there and Classic answers alone.
 --   3. This account's own tames (Logic/TameRecord.lua, `tamedBeasts`).
 --
 -- A field nothing knows stays empty; nothing here guesses.
