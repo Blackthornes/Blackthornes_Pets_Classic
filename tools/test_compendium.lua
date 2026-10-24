@@ -1,6 +1,6 @@
--- The Pet Compendium: the Classic list, Forever's findings laid over it (and
--- winning), the filters and sorting, the window, and the tame record now
--- noting where a beast was tamed.
+-- The Pet Compendium: the Classic list (Era ships no Forever findings), this
+-- account's own tames laid over it, the filters and sorting, the window, and
+-- the tame record noting where a beast was tamed.
 
 local env = dofile(lfs_cwd .. "/tools/testenv.lua")
 local suite = env.NewSuite("compendium")
@@ -24,15 +24,8 @@ end
 suite.check("the Classic list holds hundreds of beasts", count > 400, count)
 suite.check("every beast has a name, family, levels and a zone", bad == nil, bad)
 
-local ids, dupe = {}, nil
-for _, found in ipairs(ns.ForeverBeasts.FOUND) do
-    suite.check("no Forever find names a website", found.source == nil, found.name)
-    if found.id then
-        if ids[found.id] then dupe = found.id end
-        ids[found.id] = true
-    end
-end
-suite.check("no Forever find is listed twice", dupe == nil, dupe)
+-- Classic Era ships no Forever findings: the list is Classic's alone.
+suite.check("no Forever beast data is loaded", ns.ForeverBeasts == nil)
 
 -- Families the Forever client has and 1.12 did not.
 suite.check("Fox and Core Hound are known families that eat meat",
@@ -48,43 +41,28 @@ suite.check("and when she comes back", C.RespawnText(fang) == "3 hours", C.Respa
 suite.check("she teaches Bite 2", C:Skills(fang)[1] and C:Skills(fang)[1].name == "Bite"
     and C:Skills(fang)[1].rank == 2)
 
--- Seen on Forever: Farmer's harvest wins over Classic, and Classic is kept.
+-- Nothing from Forever is laid over Classic.
+local marked
+for _, entry in ipairs(C:All()) do
+    if entry.forever then marked = entry.name end
+end
+suite.check("no beast is marked as seen on Forever", marked == nil, marked)
 local scorpid
 for _, entry in ipairs(C:All()) do
     if entry.name == "Armored Scorpid" then scorpid = entry end
 end
-suite.check("a beast seen on Forever is marked", scorpid and scorpid.forever == "seen")
-local seen = ns.ForeverBeasts.SEEN["Armored Scorpid"]
-suite.check("and its Forever spot wins", scorpid.x == seen.x and scorpid.y == seen.y
-    and scorpid.min == seen.min)
-suite.check("with Classic's kept beside it", scorpid.classic and scorpid.classic.zone == "Durotar")
-
--- Seen inside a dungeon: the spot is on the instance's own map, which the
--- pin and the arrow cannot use, so Classic's place outside it stays.
+suite.check("a Classic beast keeps Classic's place", scorpid and scorpid.zone == "Durotar"
+    and scorpid.classic == nil, scorpid and scorpid.zone)
 local coiler = C:Get(3630)
-suite.check("a beast seen inside The Wailing Caverns is still marked", coiler and coiler.forever == "seen")
-suite.check("and keeps its spot in The Barrens", coiler.zone == "The Barrens"
-    and coiler.x == 46.1 and coiler.y == 34.6, coiler.zone)
+suite.check("a Wailing Caverns beast keeps its spot in The Barrens", coiler and coiler.zone == "The Barrens"
+    and coiler.x == 46.1 and coiler.y == 34.6, coiler and coiler.zone)
 suite.check("so it can still be pinned", C.PlaceText(coiler) == "The Barrens 46.1, 34.6", C.PlaceText(coiler))
-
--- New on Forever.
-local alpha = C:Get(250874)
-suite.check("a new Forever fox is in the list", alpha and alpha.family == "Fox"
-    and alpha.forever == "found" and alpha.zone == "Zephras Isle")
-local skills = C:Skills(alpha)
-suite.check("teaching Trickster's Dance", skills[1] and skills[1].name == "Trickster's Dance")
-suite.check("a fox shows the diet the Forever client gives its family", alpha.diet == "Meat")
-suite.check("Forever's second Galestrider is a beast of its own",
-    C:Get(251661).zone == "Zephras Isle" and C:Get(262523).zone == "Mulgore")
-suite.check("a bird of prey is filed with Classic's owls", C:Get(276101).family == "Owl")
-
--- A Classic beast that teaches one of Forever's new skills keeps Classic's too.
+suite.check("Forever's new beasts are not listed", C:Get(250874) == nil and C:Get(276101) == nil)
 local bear = C:Get(1797)
 local names = {}
 for _, skill in ipairs(C:Skills(bear)) do names[#names + 1] = skill.name .. skill.rank end
-local list = table.concat(names, ",")
-suite.check("the Giant Grizzled Bear teaches Swipe on Forever", list:find("Swipe1", 1, true), list)
-suite.check("a Forever skill is never listed twice", select(2, list:gsub("Swipe1", "")) == 1)
+suite.check("no beast teaches a skill only Forever named", bear
+    and not table.concat(names, ","):find("Swipe", 1, true), table.concat(names, ","))
 
 -- This account's own tame wins over everything else.
 ns.db.tamedBeasts = { [471] = { name = "Mother Fang", level = 11, zone = "Elwynn Forest", x = 63, y = 49,
@@ -123,9 +101,15 @@ for _, entry in ipairs(prowl) do
     if entry.name == "Zulian Stalker" then hasProwler = true end
 end
 suite.check("the search finds a skill", hasProwler)
-suite.check("and a zone", #C:List({ text = "zephras" }) > 10)
-local forever = C:List({ foreverOnly = true })
-suite.check("seen on Forever is the Forever beasts", #forever > 50 and forever[1].forever ~= nil)
+suite.check("and a zone", #C:List({ text = "durotar" }) > 5)
+suite.check("seen on Forever is empty with nothing tamed", #C:List({ foreverOnly = true }) == 0)
+ns.db.tamedBeasts = { [471] = { name = "Mother Fang", level = 11, zone = "Elwynn Forest", x = 63, y = 49,
+    skills = { { name = "Bite", rank = 2 } } } }
+C:Invalidate()
+local mine = C:List({ foreverOnly = true })
+suite.check("and lists your own tames", #mine == 1 and mine[1].id == 471, #mine)
+ns.db.tamedBeasts = nil
+C:Invalidate()
 
 -- New skills: a hunter whose Beast Training lists Bite 2 only.
 ns.charDB.beastTraining = { readAt = 1, known = { ["Bite#2"] = true } }
@@ -166,7 +150,7 @@ local fast = C:List({ sort = "speed" })
 suite.check("speed sorts fastest first", Ordered(fast) and fast[1].speed == 1, fast[1].speed)
 local slow = C:List({ sort = "speed", descending = true })
 suite.check("and turned round, slowest first", Ordered(slow, true) and slow[1].speed > fast[1].speed)
-for _, box in ipairs({ "foreverOnly", "raresOnly" }) do
+for _, box in ipairs({ "raresOnly", "tameNow" }) do
     local up = C:List({ sort = "speed", [box] = true })
     local down = C:List({ sort = "speed", [box] = true, descending = true })
     suite.check("with " .. box .. " ticked it still turns round", #up > 1 and Ordered(up)
@@ -178,7 +162,11 @@ local slowCats = C:List({ sort = "speed", family = "Cat", descending = true })
 local slowest = 0
 for _, entry in ipairs(slowCats) do slowest = math.max(slowest, entry.speed or 0) end
 suite.check("and turned round, the slowest", slowCats[1].speed == slowest, slowCats[1].speed)
-suite.check("with a cat of no known speed still last", slowCats[#slowCats].speed == nil)
+local unknownCat = { name = "Unknown Cat", family = "Cat", min = 5, max = 5 }
+table.insert(C:All(), unknownCat)
+slowCats = C:List({ sort = "speed", family = "Cat", descending = true })
+suite.check("with a cat of no known speed still last", slowCats[#slowCats] == unknownCat)
+C:Invalidate()
 ns.db.tamedBeasts = { [2850] = { name = "Broken Tooth", level = 37, speed = 1.5, skills = {} } }
 C:Invalidate()
 tooth = C:Get(2850)
@@ -239,13 +227,13 @@ suite.check("and again turns it round", ns.db.compendium.descending == true)
 UI:SortBy("level")
 suite.check("a third time goes back to sorting by beast",
     ns.db.compendium.sort == "name" and not ns.db.compendium.descending)
-ns.db.compendium.foreverOnly, ns.db.compendium.raresOnly = true, false
+ns.db.compendium.raresOnly = true
 UI:SortBy("speed")
 local fastest = UI.lines[1]
 UI:SortBy("speed")
-suite.check("with Seen on Forever ticked, Speed turns round", ns.db.compendium.descending == true
+suite.check("with Rares Only ticked, Speed turns round", ns.db.compendium.descending == true
     and UI.lines[1] ~= fastest and (UI.lines[1].speed or 0) > (fastest.speed or 0))
-ns.db.compendium.foreverOnly, ns.db.compendium.raresOnly = false, before
+ns.db.compendium.raresOnly = before
 UI:Refresh()
 
 -- The scroll bar: holding it drags the list, not the window.

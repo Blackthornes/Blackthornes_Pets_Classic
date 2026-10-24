@@ -31,7 +31,6 @@ Data\BeastSkills.lua
 Data\PetTraining.lua
 Data\DemonBooks.lua
 Data\Compendium.lua
-Data\ForeverBeasts.lua
 Data\Travel.lua
 Data\TravelZones.lua
 

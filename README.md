@@ -43,8 +43,9 @@ in Settings) lists every beast a hunter can tame: its family and diet, level,
 zone and spot, rank and respawn, attack speed (fastest first in each family
 when sorted by it), and what taming it teaches, with filters for
 what you can tame now, rares, skills you lack and what WoW: Forever has shown.
-Classic's list comes from `tools/make_compendium.py`; Forever's findings from
-`tools/forever_beasts.py` (see the top of each for how to rerun them).
+Classic's list comes from `tools/make_compendium.py` (see the top of it for
+how to rerun it). The Classic Era copy ships no Forever findings; your own
+tames are laid over Classic's list.
 
 Shift-click a beast in the compendium and the **beast arrow** points the way
 to it: a gold dial that turns as you turn, with the distance in yards and a

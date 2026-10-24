@@ -30,6 +30,17 @@ suite.check("a Dire Mottled Boar teaches Charge (Rank 1)",
     #boar == 1 and Taming.Label(boar[1]) == "Charge (Rank 1)", boar[1] and Taming.Label(boar[1]))
 suite.check("a beast that teaches nothing has no skills", #Taming:SkillsFor(2956) == 0)
 
+-- Classic Era ships no Forever tames: Classic's table answers, and this
+-- account's own tame still wins over it.
+suite.check("no Forever beast data is loaded", ns.ForeverBeasts == nil)
+ns.db.tamedBeasts = { [3099] = { name = "Dire Mottled Boar", level = 6,
+    skills = { { name = "Charge", rank = 1 }, { name = "Bite", rank = 1 } } } }
+local mine = Taming:SkillsFor(3099)
+suite.check("a beast you tamed answers from what the game showed",
+    #mine == 2 and mine[1].seen == true and mine[2].name == "Bite", #mine)
+ns.db.tamedBeasts = nil
+suite.check("and without it Classic answers again", #Taming:SkillsFor(3099) == 1)
+
 -- The creature id.
 suite.check("reads the creature id from a creature's GUID",
     Taming:NpcID("Creature-0-4378-1-17-3099-00004C3A2B") == 3099)
