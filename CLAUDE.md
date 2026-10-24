@@ -10,6 +10,34 @@ file and in theirs. Keep them current: when a change here leans on something
 new in another addon, or a standing rule from the owner applies to all of them,
 add it to each file.
 
+## This repo is the Classic Era copy
+
+`Blackthornes/Blackthornes_Pets_Classic` is Pets for WoW Classic Era,
+copied from `Blackthornes/Blackthornes_Pets` (Forever) with its history on
+2026-10-24 (the owner said build it, after Farmer's and Butler's Era
+copies). Its releases, tests and CurseForge page are its own. Forever
+comes first, and nothing done here may ever touch the Forever addon. So:
+
+- Never push to, or open PRs on, the Forever repo from work here. Changes
+  come over from Forever on purpose (cherry-pick or copy), never the other
+  way.
+- The addon folder and TOC stay `Blackthornes_Pets`, the saved data
+  `BlackthornesPetsDB` and `BlackthornesPetsCharDB`, the global and
+  `/bpet`, so nothing is renamed.
+- The TOC names Era's interface, `## Interface: 11509` (what the owner's
+  Era client reports, 2026-10-24).
+- Never put Forever's CurseForge ID (1720056) in the TOC:
+  `tools/check_release.py` refuses a tag that does. The owner makes the Era
+  project himself; its ID goes on the TOC's `X-Curse-Project-ID` line then.
+- The steps still to come (Forever's beasts out, Era's pet calls as
+  fallbacks, the probe in Era, data made again from Era's tables, the
+  sister lists) are in the project's `pets-classic-plan.md`, one small PR
+  each.
+- Not yet seen in an Era client. Read client calls in a pcall as everywhere
+  else.
+- The rest of this file describes the Forever addon; read it as the
+  starting point, not as what Era has.
+
 Nothing private goes in this file (no local paths, emails or account names).
 It never ships: `.pkgmeta` leaves it out of the zip and
 `tools/check_package.py` refuses it.
@@ -172,8 +200,9 @@ one belongs in all; Farmer's `CLAUDE.md` has the details); Pets' side is
 (`TomTomLink.Point`). Tested in `tools/test_travel.lua`. Not yet seen in
 game.
 
-The CurseForge project ID is **1720056** (the owner created it 2026-09-30), on the
-TOC's `X-Curse-Project-ID` line. The first release is 0.1.0.
+Forever's CurseForge project ID is **1720056** (the owner created it 2026-09-30).
+The Classic Era copy gets its own, on the TOC's `X-Curse-Project-ID` line
+once the owner makes it; never Forever's. The first release is 0.1.0.
 
 ## What Butler calls here
 
