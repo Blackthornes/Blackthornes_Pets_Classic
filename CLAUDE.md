@@ -27,8 +27,10 @@ comes first, and nothing done here may ever touch the Forever addon. So:
 - The TOC names Era's interface, `## Interface: 11509` (what the owner's
   Era client reports, 2026-10-24).
 - Never put Forever's CurseForge ID (1720056) in the TOC:
-  `tools/check_release.py` refuses a tag that does. The owner makes the Era
-  project himself; its ID goes on the TOC's `X-Curse-Project-ID` line then.
+  `tools/check_release.py` refuses a tag that does. Pets Classic is
+  **1763344** (the owner made it 2026-10-24), on the TOC's
+  `X-Curse-Project-ID` line, and `tools/test_check_release.py` checks it is
+  there.
 - Forever's beasts are out (2026-10-24, step 2 of the plan):
   `Data/ForeverBeasts.lua` and `tools/forever_beasts.py` are gone and the
   TOC no longer lists the data. `Logic/Compendium.lua` and
@@ -208,8 +210,8 @@ one belongs in all; Farmer's `CLAUDE.md` has the details); Pets' side is
 game.
 
 Forever's CurseForge project ID is **1720056** (the owner created it 2026-09-30).
-The Classic Era copy gets its own, on the TOC's `X-Curse-Project-ID` line
-once the owner makes it; never Forever's. The first release is 0.1.0.
+This Classic Era copy's is **1763344** (2026-10-24), on the TOC's
+`X-Curse-Project-ID` line; never Forever's. The first release is 0.1.0.
 
 ## What Butler calls here
 

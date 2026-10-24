@@ -53,7 +53,11 @@ expect("a missing NEWS.md does not warn", language_warnings("v0.2.0", LOG, None)
 
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 with open(os.path.join(root, "Blackthornes_Pets.toc"), encoding="utf-8") as f:
-    expect("the real TOC is set up for tags", "@project-version@" in f.read())
+    real_toc = f.read()
+    expect("the real TOC is set up for tags", "@project-version@" in real_toc)
+    expect("the real TOC names Pets Classic's CurseForge project",
+           "\n## X-Curse-Project-ID: 1763344" in real_toc)
+    expect("the real TOC passes the release check", check("v0.2.0", LOG, real_toc) == [])
 
 # Played from a checkout the addon shows ns.RELEASED_VERSION, so it must be
 # the changelog's newest: the release PR changes both together.
