@@ -69,6 +69,9 @@ Every Forever catch-up checks this note first, before sorting commits into
   `Compendium.ForeverText`, which stays for clean merges. A catch-up that
   brings any of these back keeps Classic's. Tested in
   `tools/test_beastarrow.lua`.
+- The About thank-you (`About.THANKS`) has no "WoW Forever is almost here"
+  paragraph (the owner, 2026-10-24). `UI/About.lua` is shared with Forever;
+  a catch-up that brings the paragraph back keeps Classic's.
 
 ## Not yet done
 - The rest of the plan (Era's pet calls as fallbacks, the probe in Era,
