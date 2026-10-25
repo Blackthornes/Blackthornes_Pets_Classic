@@ -39,6 +39,10 @@ local MIN_WIDTH = 150
 local MAX_WIDTH = 320
 -- The room the arrow leaves under Farmer's XP bar.
 local CLEAR_GAP = 4
+-- The whole arrow, plate and words too, is drawn at this size (the owner,
+-- 2026-10-24: it stood too large). The saved spot stays in UIParent's
+-- units, so it does not move.
+ArrowUI.SCALE = 0.65
 
 -- Redrawn this often, seconds: smooth to the eye, cheap to run.
 local STEP = 0.03
@@ -86,6 +90,7 @@ function ArrowUI:Build()
 
     local frame = CreateFrame("Frame", "BlackthornesPetsBeastArrow", UIParent)
     frame:SetSize(MIN_WIDTH, RING + PLATE_HEIGHT + 56)
+    pcall(frame.SetScale, frame, ArrowUI.SCALE)
     frame:SetFrameStrata("MEDIUM")
     frame:SetClampedToScreen(true)
     frame:EnableMouse(true)
@@ -435,9 +440,12 @@ function ArrowUI:SavePosition()
     local ok, x, y = pcall(function() return frame:GetCenter() end)
     if not (ok and type(x) == "number" and type(y) == "number") then return end
 
+    -- GetCenter answers in the arrow's own (smaller) units; the spot is
+    -- kept in UIParent's, as it was before the arrow was made smaller.
+    local scale = ArrowUI.SCALE
     frame:ClearAllPoints()
     frame:SetPoint("CENTER", UIParent, "BOTTOMLEFT", x, y)
-    ns.db.beastArrowX, ns.db.beastArrowY = x, y
+    ns.db.beastArrowX, ns.db.beastArrowY = x * scale, y * scale
 end
 
 --- Farmer's XP bar can come up after the arrow, so the arrow listens for
@@ -482,11 +490,19 @@ function ArrowUI:AvoidXPBar()
         local farmer = _G.BlackthornesFarmer
         local bar = farmer and farmer.XPBarUI and farmer.XPBarUI.frame
         if not (bar and bar:IsShown()) then return end
-        local barLeft, barBottom, barWidth, barHeight = bar:GetRect()
+        -- Each rect in screen units, since the arrow is drawn smaller than
+        -- the bar.
+        local function Rect(part)
+            local x, y, w, h = part:GetRect()
+            if not x then return end
+            local s = part:GetEffectiveScale() or 1
+            return x * s, y * s, w * s, h * s
+        end
+        local barLeft, barBottom, barWidth, barHeight = Rect(bar)
         if not barLeft then return end
         local left, bottom, right, top
         for _, part in ipairs({ frame, self.plate, self.close }) do
-            local x, y, w, h = part:GetRect()
+            local x, y, w, h = Rect(part)
             if x and (part == frame or part:IsShown()) then
                 left = math.min(left or x, x)
                 bottom = math.min(bottom or y, y)
@@ -509,10 +525,12 @@ function ArrowUI:RestorePosition()
     if not frame then return end
     frame:ClearAllPoints()
     if ns.db.beastArrowX and ns.db.beastArrowY then
-        frame:SetPoint("CENTER", UIParent, "BOTTOMLEFT", ns.db.beastArrowX, ns.db.beastArrowY)
+        local scale = ArrowUI.SCALE
+        frame:SetPoint("CENTER", UIParent, "BOTTOMLEFT",
+            ns.db.beastArrowX / scale, ns.db.beastArrowY / scale)
     else
         -- Top middle, under where the game puts its own messages.
-        frame:SetPoint("TOP", UIParent, "TOP", 0, -140)
+        frame:SetPoint("TOP", UIParent, "TOP", 0, -140 / ArrowUI.SCALE)
     end
     self:AvoidXPBar()
 end
