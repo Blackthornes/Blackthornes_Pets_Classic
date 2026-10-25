@@ -5,15 +5,10 @@
 local _, ns = ...
 
 ns.WHATS_NEW = {
-    { version = "0.21.0", lines = {
-        "The Pet tab shows what your pet knows, what it can learn now and what comes later, and where the pet trainer is.",
-        "Pet, Compendium and Settings are tabs in one window now.",
-        "Every window has a size grip, and the General page has an Effects choice.",
-    } },
-    { version = "0.20.0", lines = {
-        "The taming skills on a beast's tooltip can be Off, Shift or Always. You pick in Settings.",
-    } },
-    { version = "0.19.0", lines = {
-        "Pets speaks Simplified Chinese, French, Spanish and Russian now if your game is in one of those.",
+    { version = "0.1.0", lines = {
+        "Pets is here for Classic Era. Hunters get a Feed button and a warning when their pet gets hungry.",
+        "The Pet Compendium lists every beast you can tame. Shift-click one and an arrow points you to it.",
+        "The Skills card shows what your pet knows and what it can learn.",
+        "Warlocks get a Skills card for their demons, and a soul shard count.",
     } },
 }
