@@ -67,6 +67,7 @@ L["No exact spot for it in this zone yet"] = "Точного места в эт�
 L["The middle of the zone, since there's no exact spot yet"] =
     "Середина зоны, потому что точного места пока нет"
 L["Where it lived in Classic"] = "Где он жил в Classic"
+L["Where you tamed it"] = "Где ты его приручил"
 L["Far away"] = "Далеко"
 L["In %s"] = "Зона: %s"
 L["this zone"] = "эта зона"
@@ -173,8 +174,8 @@ L["Can't see you here"] = "Здесь тебя не видно"
 L["The game won't say where you are"] = "Игра не говорит, где ты"
 
 -- The compendium window
-L["Click a beast to pin it on your map, or Shift-click to point the arrow at it. %s marks what WoW: Forever has shown."] =
-    "Щёлкни по зверю, чтобы отметить его на карте, или нажми Shift и щёлкни, чтобы на него указала стрелка. %s отмечает то, что было в WoW: Forever."
+L["Click a beast to pin it on your map, or Shift-click to point the arrow at it."] =
+    "Щёлкни по зверю, чтобы отметить его на карте, или нажми Shift и щёлкни, чтобы на него указала стрелка."
 L["Settings"] = "Настройки"
 L["Arrow"] = "Стрелка"
 L["All families"] = "Все семейства"
@@ -184,7 +185,6 @@ L["Only beasts at or below your level."] = "Только звери твоего
 L["Rares only"] = "Только редкие"
 L["Teaches me something new"] = "Научит новому"
 L["Only beasts that teach a skill you don't have yet."] = "Только звери, которые учат навыку, которого у тебя ещё нет."
-L["Only beasts known to live on WoW: Forever."] = "Только звери, которые точно живут в WoW: Forever."
 L["Click again to flip it, and once more to go back."] = "Щёлкни ещё раз, чтобы перевернуть, и ещё раз, чтобы вернуть."
 L["Beast"] = "Зверь"
 L["Sort by beast"] = "Сортировать по зверю"
@@ -213,7 +213,6 @@ L["Level %s. You can tame it now."] = "Уровень %s. Его можно пр
 L["Level %s. You can tame it from level %d."] = "Уровень %s. Приручить можно с уровня %d."
 L["Level %s"] = "Уровень %s"
 L["Attack speed %s"] = "Скорость атаки %s"
-L["Attack speed %s (seen on Forever)"] = "Скорость атаки %s (замечено на Forever)"
 L["Where it lives is not known yet."] = "Пока неизвестно, где он живёт."
 L["Shift-click to point the arrow at it."] = "Нажми Shift и щёлкни, чтобы на него указала стрелка."
 L["Also in %s"] = "Ещё в: %s"
@@ -423,7 +422,6 @@ L["A note from Blackthornes."] = "Пара слов от Blackthornes."
 L["Thank you"] = "Спасибо"
 L["Thank you to everyone who sent ideas and bug reports. You helped shape every one of these add-ons. Without you, they would not be what they are today."] = "Спасибо всем, кто присылал идеи и сообщения об ошибках. Вы помогли сделать каждый из этих аддонов таким, какой он есть. Без вас они не стали бы тем, чем стали сегодня."
 L["There are still some bugs to work out, and those fixes will come with time. If you find one, jump on our Discord and share it. You can find the link on the About page in Settings. Every message gets read."] = "Ещё остались ошибки, которые нужно исправить, и исправления будут появляться со временем. Если найдёшь ошибку, заходи в наш Discord и расскажи о ней. Ссылка есть на странице «Об аддоне» в настройках. Каждое сообщение читают."
-L["WoW Forever is almost here, and we can't wait. We look forward to building and improving these add-ons with you from here on."] = "WoW Forever уже скоро, и мы с нетерпением ждём. Мы хотим и дальше создавать и улучшать эти аддоны вместе с вами."
 L["ABOUT"] = "ОБ АДДОНЕ"
 L["HOW THESE ADDONS ARE MADE"] = "КАК ДЕЛАЮТСЯ ЭТИ АДДОНЫ"
 L["How these addons are made, the version, the Discord and the other Blackthornes addons"] = "Как делаются эти аддоны, версия, Discord и другие аддоны Blackthornes"

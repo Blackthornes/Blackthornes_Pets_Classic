@@ -1,7 +1,7 @@
 -- Blackthornes Pets -- UI/CompendiumWindow.lua
 -- The Pet Compendium: every beast a hunter can tame, what taming it teaches,
--- when it can be tamed, where it lives and how rare it is, with what WoW:
--- Forever has shown marked in green.
+-- when it can be tamed, where it lives and how rare it is. Classic Era shows
+-- no Forever marks, box or line.
 --
 -- It wears the whole house frame, like the pets window: the paw in the
 -- portrait, the name on the plate and the close gem. Above the list is the
@@ -77,7 +77,7 @@ function CompendiumUI:Filter()
     return {
         family = o.family, text = self.searchText, tameNow = o.tameNow == true,
         raresOnly = o.raresOnly == true, newSkills = o.newSkills == true,
-        foreverOnly = o.foreverOnly == true, sort = o.sort or "name", descending = o.descending == true,
+        sort = o.sort or "name", descending = o.descending == true,
     }
 end
 
@@ -154,8 +154,7 @@ function CompendiumUI:Build()
     hint:SetPoint("BOTTOMLEFT", PADDING, 12)
     hint:SetWidth(WIDTH - PADDING * 2)
     hint:SetWordWrap(true)
-    hint:SetText(L.Format("Click a beast to pin it on your map, or Shift-click to point the arrow at it. %s marks what WoW: Forever has shown.",
-        Colored("good", "Forever")))
+    hint:SetText(L["Click a beast to pin it on your map, or Shift-click to point the arrow at it."])
     self.hint = hint
 
     -- Sits on the hint's top, so a hint that wraps to a second line (the
@@ -260,8 +259,6 @@ function CompendiumUI:BuildBar()
         { key = "raresOnly", text = L["Rares only"] },
         { key = "newSkills", text = L["Teaches me something new"],
           tip = L["Only beasts that teach a skill you don't have yet."] },
-        { key = "foreverOnly", text = L["Seen on Forever"],
-          tip = L["Only beasts known to live on WoW: Forever."] },
     }
     self.ticks = {}
     local previous
@@ -509,7 +506,6 @@ function CompendiumUI:NameText(entry)
     local below = {}
     local rank = Compendium().RankText(entry)
     if rank then below[#below + 1] = rank end
-    if entry.forever then below[#below + 1] = Colored("good", "Forever") end
     if #below > 0 then name = name .. "\n" .. Colored("dim", table.concat(below, "  ")) end
     return name
 end
@@ -608,9 +604,7 @@ function CompendiumUI:ShowTooltip(row)
     local speed = C.SpeedText(entry)
     if speed then
         local key = entry.speed < USUAL_SPEED and "good" or entry.speed > USUAL_SPEED and "warn" or "text"
-        local text = entry.speedSeen and L.Format("Attack speed %s (seen on Forever)", speed)
-            or L.Format("Attack speed %s", speed)
-        GameTooltip:AddLine(text, Theme.Unpack(key))
+        GameTooltip:AddLine(L.Format("Attack speed %s", speed), Theme.Unpack(key))
     end
 
     GameTooltip:AddLine(" ")
@@ -644,12 +638,6 @@ function CompendiumUI:ShowTooltip(row)
             local tail = known == true and ("  " .. L["(known)"]) or known == false and ("  " .. L["(not known)"]) or ""
             GameTooltip:AddLine("  " .. ns.Taming.Label(skill) .. tail, Theme.Unpack(key))
         end
-    end
-
-    local forever = C.ForeverText(entry)
-    if forever then
-        GameTooltip:AddLine(" ")
-        GameTooltip:AddLine(forever, Theme.Unpack("good"))
     end
 
     GameTooltip:AddLine(" ")
