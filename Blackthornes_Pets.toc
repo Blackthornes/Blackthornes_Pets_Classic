@@ -1,6 +1,12 @@
 ## Interface: 11509
 ## Title: Blackthornes Pets
 ## Notes: Looks after everything to do with pets for hunters and warlocks.
+## Notes-deDE: Kümmert sich um alles rund um Begleiter für Jäger und Hexenmeister.
+## Notes-frFR: S'occupe de tout ce qui concerne les familiers des chasseurs et des démonistes.
+## Notes-esES: Se ocupa de todo lo relacionado con las mascotas de cazadores y brujos.
+## Notes-esMX: Se ocupa de todo lo relacionado con las mascotas de cazadores y brujos.
+## Notes-ruRU: Помогает со всем, что связано с питомцами охотников и чернокнижников.
+## Notes-zhCN: 照料猎人和术士宠物的一切。
 ## Author: Blackthornes
 ## Version: @project-version@
 ## X-License: All Rights Reserved
