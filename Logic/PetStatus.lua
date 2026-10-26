@@ -4,7 +4,9 @@
 --
 -- Built on what /bpet probe found (docs/FOREVER_API_FINDINGS.md): Forever
 -- keeps the classic hunter mechanics under C_PetInfo, in their classic
--- shapes, except that the food types come back as a list. The pet's current
+-- shapes, except that the food types come back as a list. Era has only the
+-- classic globals (GetPetHappiness and friends), read when C_PetInfo is not
+-- there. The pet's current
 -- health and focus are secret values, so nothing here reads them.
 
 local _, ns = ...
@@ -70,6 +72,19 @@ local function Call(path, ...)
     return unpack(out, 1, table.maxn(results) - 1)
 end
 
+--- Forever keeps the hunter's pet calls under C_PetInfo; Era has only the
+--- classic globals. Ask the first, then the second when the first is absent
+--- or says nothing.
+local function CallEither(first, second)
+    if Resolve(first) then
+        local results = { Call(first) }
+        if table.maxn(results) > 0 then return unpack(results, 1, table.maxn(results)) end
+    end
+    return Call(second)
+end
+
+PetStatus.CallEither = CallEither
+
 local function Number(value)
     if type(value) == "number" then return value end
     return nil
@@ -78,6 +93,15 @@ end
 local function Text(value)
     if type(value) == "string" and value ~= "" then return value end
     return nil
+end
+
+--- The classic client names loyalty as "Loyalty Level 3 (Submissive)";
+--- Forever as "Submissive". Keep only the name.
+function PetStatus.LoyaltyName(text)
+    if type(text) ~= "string" then return nil end
+    local inner = text:match("%((.-)%)%s*$")
+    if inner and inner ~= "" then return inner end
+    return text
 end
 
 --- Everything the addon knows about the current pet, as a plain table.
@@ -107,7 +131,7 @@ function PetStatus:Read()
     -- read as before.
     if status.class and status.class ~= "HUNTER" then return status end
 
-    local happiness, damage, loyaltyRate = Call("C_PetInfo.GetPetHappiness")
+    local happiness, damage, loyaltyRate = CallEither("C_PetInfo.GetPetHappiness", "GetPetHappiness")
     happiness = Number(happiness)
     if happiness and HAPPINESS[happiness] then
         status.happiness = happiness
@@ -115,19 +139,20 @@ function PetStatus:Read()
         status.loyaltyRate = Number(loyaltyRate)
     end
 
-    status.loyalty = Text(Call("C_PetInfo.GetPetLoyalty"))
+    status.loyalty = PetStatus.LoyaltyName(Text(CallEither("C_PetInfo.GetPetLoyalty", "GetPetLoyalty")))
 
-    local foods = Call("C_PetInfo.GetPetFoodTypes")
-    if type(foods) == "table" then
-        local list = {}
-        for _, food in ipairs(foods) do
-            local name = Text(Plain(food))
-            if name then list[#list + 1] = name end
-        end
-        if #list > 0 then status.foods = list end
+    -- Forever gives the food types as one list; Era's own call gives them
+    -- one value each, as the classic client always did.
+    local foods = { CallEither("C_PetInfo.GetPetFoodTypes", "GetPetFoodTypes") }
+    if type(foods[1]) == "table" then foods = foods[1] end
+    local list = {}
+    for i = 1, table.maxn(foods) do
+        local name = Text(Plain(foods[i]))
+        if name then list[#list + 1] = name end
     end
+    if #list > 0 then status.foods = list end
 
-    local total, spent = Call("C_PetInfo.GetPetTrainingPoints")
+    local total, spent = CallEither("C_PetInfo.GetPetTrainingPoints", "GetPetTrainingPoints")
     total, spent = Number(total), Number(spent)
     if total and spent then
         status.trainingTotal, status.trainingSpent = total, spent
