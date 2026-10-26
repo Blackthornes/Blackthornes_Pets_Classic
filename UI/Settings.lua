@@ -59,6 +59,12 @@ function SettingsUI:ResetPositions()
         -- Not built this session: the saved spot goes, so it starts in place.
         ns.db.beastArrowX, ns.db.beastArrowY = nil, nil
     end
+    -- The small Feed button goes back above the quest tracker.
+    if ns.FeedButton then
+        ns.FeedButton:ResetPlace()
+    else
+        ns.db.quickFeedX, ns.db.quickFeedY = nil, nil
+    end
 end
 
 --------------------------------------------------------------------------------

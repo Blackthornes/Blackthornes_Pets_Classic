@@ -236,6 +236,7 @@ L["open the Pet Compendium: every beast you can tame"] =
 -- The Feed buttons
 L["Feed"] = "喂食"
 L["Feed %s"] = "喂%s"
+L["Hold right-click and drag to move it."] = "按住右键拖动即可移动它。"
 L["%s is %s."] = "%s%s。"
 L["hungry"] = "饿了"
 

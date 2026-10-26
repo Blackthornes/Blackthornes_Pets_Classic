@@ -88,6 +88,36 @@ suite.check("the settings page shows it on", box:GetChecked())
 box:GetScript("OnClick")(box)
 suite.check("and unticking turns it off", ns.db.quickFeed == false and not button:IsShown())
 
+
+-- Moving it: only the left button feeds, the right button drags it, and the
+-- spot it is dropped on is kept and used from then on.
+_G.InCombatLockdown = nil
+ns.db.quickFeed = true
+happiness = 1
+Refresh()
+suite.check("it shows again", button:IsShown())
+suite.check("only the left button feeds", button._clicks and button._clicks[1] == "LeftButtonUp",
+    button._clicks and button._clicks[1])
+suite.check("the right button drags it", button._drag == "RightButton")
+local moved = false
+function button:StartMoving() moved = true end
+button._scripts.OnDragStart(button)
+suite.check("a drag moves it", moved)
+button._left, button._top = 300, 500
+button._scripts.OnDragStop(button)
+suite.check("the spot is kept", ns.db.quickFeedX == 300 and ns.db.quickFeedY == 500)
+Refresh()
+suite.check("and used from then on", button._point[1] == "TOPLEFT" and button._point[4] == 300
+    and button._point[5] == 500)
+moved = false
+_G.InCombatLockdown = function() return true end
+button._scripts.OnDragStart(button)
+suite.check("no moving in a fight", not moved)
+_G.InCombatLockdown = nil
+ns.SettingsUI:ResetPositions()
+suite.check("Set Default puts it back", ns.db.quickFeedX == nil
+    and button._point[1] == "BOTTOMLEFT", button._point[1])
+
 _G.C_Container, _G.C_Item, _G.C_PetInfo, _G.ObjectiveTrackerFrame = nil, nil, nil, nil
 _G.UnitExists, _G.UnitName, _G.UnitLevel = nil, nil, nil
 
