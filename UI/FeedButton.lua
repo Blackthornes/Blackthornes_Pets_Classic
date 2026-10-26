@@ -36,7 +36,21 @@ function FeedButton:Build()
         height = 20,
     })
     button:SetFrameStrata("HIGH")
-    button:RegisterForClicks("AnyUp", "AnyDown")
+    -- Only the left button feeds; the right button drags it (the owner,
+    -- 2026-10-26), out of combat only, and its spot is kept account wide
+    -- in quickFeedX/quickFeedY (never rename them).
+    button:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
+    button:SetMovable(true)
+    button:SetClampedToScreen(true)
+    button:RegisterForDrag("RightButton")
+    button:SetScript("OnDragStart", function(self)
+        if InCombat() then return end
+        self:StartMoving()
+    end)
+    button:SetScript("OnDragStop", function(self)
+        self:StopMovingOrSizing()
+        FeedButton:SavePlace()
+    end)
     button:HookScript("OnEnter", function(self)
         local stack = FeedButton.stack
         if not (stack and GameTooltip) then return end
@@ -44,6 +58,7 @@ function FeedButton:Build()
         GameTooltip:AddLine(L.Format("Feed %s", ns.Food.ShownName(stack)))
         GameTooltip:AddLine(L.Format("%s is %s.", FeedButton.petName or L["Your pet"],
             FeedButton.mood or L["hungry"]), 0.7, 0.7, 0.7)
+        GameTooltip:AddLine(L["Hold right-click and drag to move it."], 0.7, 0.7, 0.7)
         GameTooltip:Show()
     end)
     button:HookScript("OnLeave", function()
@@ -70,6 +85,12 @@ function FeedButton:Place()
     local button = self.button
     button:ClearAllPoints()
 
+    local db = ns.db
+    if db and type(db.quickFeedX) == "number" and type(db.quickFeedY) == "number" then
+        button:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db.quickFeedX, db.quickFeedY)
+        return
+    end
+
     local tracker = Tracker()
     if tracker then
         local ok, left, top, scale = pcall(function()
@@ -82,6 +103,29 @@ function FeedButton:Place()
         end
     end
     button:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", FALLBACK_X, FALLBACK_Y)
+end
+
+--- Keep where the player dragged the button: its top left corner, in
+--- UIParent's units.
+function FeedButton:SavePlace()
+    local button = self.button
+    if not (button and ns.db) then return end
+    local ok, left, top, scale = pcall(function()
+        return button:GetLeft(), button:GetTop(),
+            button:GetEffectiveScale() / UIParent:GetEffectiveScale()
+    end)
+    if not (ok and type(left) == "number" and type(top) == "number" and type(scale) == "number") then
+        return
+    end
+    ns.db.quickFeedX, ns.db.quickFeedY = left * scale, top * scale
+    if not InCombat() then self:Place() end
+end
+
+--- Back above the quest tracker, as it started.
+function FeedButton:ResetPlace()
+    if not ns.db then return end
+    ns.db.quickFeedX, ns.db.quickFeedY = nil, nil
+    if self.button and self.button:IsShown() and not InCombat() then self:Place() end
 end
 
 --- Whether the pet needs feeding: below the feed warning's line.

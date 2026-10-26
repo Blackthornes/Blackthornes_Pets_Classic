@@ -43,6 +43,8 @@ local function Stub(fields)
     function frame:GetStringWidth() return #(self._text or "") * 6 end
 
     function frame:SetScript(script, fn) self._scripts[script] = fn end
+    function frame:RegisterForClicks(...) self._clicks = { ... } end
+    function frame:RegisterForDrag(button) self._drag = button end
     function frame:GetScript(script) return self._scripts[script] end
     -- Runs after whatever script was there, as the game's HookScript does.
     function frame:HookScript(script, fn)
