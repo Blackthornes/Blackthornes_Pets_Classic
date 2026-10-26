@@ -4,6 +4,11 @@ Versions follow [semantic versioning](https://semver.org): the middle number
 moves for new behaviour, the last for fixes alone. The newest version goes at
 the top; a release is refused if its version has no section here.
 
+## 0.2.0
+
+- You can move the small Feed button by holding right-click and dragging it.
+- Various bug fixes.
+
 ## 0.1.0
 
 First release for WoW Classic Era.
