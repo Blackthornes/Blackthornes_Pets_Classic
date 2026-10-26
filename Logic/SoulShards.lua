@@ -16,6 +16,9 @@ SoulShards.LOW = 2
 -- How long after a loading screen before the bags are trusted, as the low
 -- food warning waits (Food's BAGS_SETTLE).
 SoulShards.SETTLE = 10
+-- Drain Soul, every rank: the spell that makes shards. Until the warlock
+-- knows it there is nothing to warn about (level 10 on Classic).
+SoulShards.DRAIN_SOUL = { 1120, 8288, 8289, 11675 }
 
 local function Plain(value) return ns.PetStatus.Plain(value) end
 
@@ -31,6 +34,21 @@ function SoulShards.IsWarlock()
     return ok and Plain(token) == "WARLOCK"
 end
 
+--- Can the warlock make shards yet? Read every time, so learning it at the
+--- trainer counts at once.
+function SoulShards.CanMake()
+    local fns = { _G.IsPlayerSpell, _G.IsSpellKnown }
+    for _, fn in ipairs(fns) do
+        if type(fn) == "function" then
+            for _, id in ipairs(SoulShards.DRAIN_SOUL) do
+                local ok, known = pcall(fn, id)
+                if ok and Plain(known) == true then return true end
+            end
+        end
+    end
+    return false
+end
+
 --- How many soul shards are in the bags, or nil when the client won't say.
 function SoulShards:Count()
     local fn = (C_Item and C_Item.GetItemCount) or _G.GetItemCount
@@ -42,11 +60,13 @@ function SoulShards:Count()
 end
 
 --- What the Pet tab's chip says, and its colour: nil when it is off, or
---- not a warlock, or the count can't be read.
+--- not a warlock, or the count can't be read, or the warlock can't make
+--- shards yet and carries none.
 function SoulShards:Chip()
     if not (self:IsOn() and self.IsWarlock()) then return nil end
     local count = self:Count()
     if not count then return nil end
+    if count == 0 and not self.CanMake() then return nil end
     local text
     if count == 1 then
         text = L["1 soul shard"]
@@ -57,9 +77,11 @@ function SoulShards:Chip()
 end
 
 --- Warn once when the shards drop to LOW or fewer, and again only after
---- there have been more than that.
+--- there have been more than that. Nothing before the warlock can make
+--- them.
 function SoulShards:Check()
     if not (self:IsOn() and self.IsWarlock()) or self.ready == false then return false end
+    if not self.CanMake() then return false end
     local count = self:Count()
     if not count then return false end
     if count > self.LOW then

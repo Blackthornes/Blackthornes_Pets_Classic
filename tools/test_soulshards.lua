@@ -15,6 +15,8 @@ local warned = {}
 local realWarn = ns.Warn
 ns.Warn = function(text) warned[#warned + 1] = text end
 SoulShards.ready = true
+local knowsDrain = true
+_G.IsPlayerSpell = function(id) return knowsDrain and id == 1120 end
 
 suite.check("off unless ticked", ns.db.soulShards == false and not SoulShards:IsOn())
 suite.check("off, no chip", SoulShards:Chip() == nil)
@@ -49,6 +51,22 @@ SoulShards.warned = nil
 suite.check("a hunter gets no chip", SoulShards:Chip() == nil)
 suite.check("or warning", SoulShards:Check() == false)
 _G.UnitClass = function() return "Warlock", "WARLOCK" end
+
+-- Before Drain Soul there is nothing to warn about.
+knowsDrain = false
+SoulShards.warned = nil
+shards = 0
+suite.check("no warning before Drain Soul", SoulShards:Check() == false and #warned == 3)
+suite.check("and no chip with none carried", SoulShards:Chip() == nil)
+shards = 1
+suite.check("but shards carried still show", SoulShards:Chip() == "1 soul shard")
+suite.check("without a warning", SoulShards:Check() == false and #warned == 3)
+_G.IsPlayerSpell = function(id) error("secret value") end
+suite.check("an unreadable spell book warns nothing", SoulShards:Check() == false)
+_G.IsPlayerSpell = function(id) return knowsDrain and id == 8289 end
+knowsDrain = true
+suite.check("any rank counts once learned", SoulShards:Check() == true and #warned == 4)
+SoulShards.warned = nil
 
 -- The client won't say.
 _G.C_Item.GetItemCount = function() error("secret value") end

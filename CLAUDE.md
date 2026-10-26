@@ -321,7 +321,9 @@ there have been more. Off unless ticked: "Soul Shards:" under WARLOCK on
 the Pet page (`soulShards`, account wide, never rename it) and `/bpet
 shards [on|off]`. `Logic/SoulShards.lua` reads the client's count of item
 6265 in a pcall, waits `SETTLE` seconds after a loading screen, and saves
-nothing. Tested in `tools/test_soulshards.lua`. Not yet seen in game.
+nothing. Nothing warns until the warlock knows Drain Soul, any rank
+(`SoulShards.CanMake`, `DRAIN_SOUL`, read each time); before then the chip
+shows only while shards are carried (the owner, 2026-10-26). Tested in `tools/test_soulshards.lua`. Not yet seen in game.
 
 ## Healthstone and Soulstone reminder
 
