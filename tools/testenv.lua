@@ -164,6 +164,9 @@ function env.InstallClient()
     _G.UnitName = nil
     _G.HasPetUI = nil
     _G.GetPetHappiness = nil
+    _G.GetPetLoyalty = nil
+    _G.GetPetFoodTypes = nil
+    _G.GetPetTrainingPoints = nil
     -- English unless a suite asks for another language (env.Load).
     _G.GetLocale = nil
 end

@@ -73,6 +73,17 @@ Every Forever catch-up checks this note first, before sorting commits into
   paragraph (the owner, 2026-10-24). `UI/About.lua` is shared with Forever;
   a catch-up that brings the paragraph back keeps Classic's.
 
+### Era's pet calls
+- Era has no `C_PetInfo`, only the classic globals. `PetStatus:Read` asks
+  `C_PetInfo` first, then `GetPetHappiness`, `GetPetLoyalty`,
+  `GetPetFoodTypes` (one value each, not a list) and `GetPetTrainingPoints`
+  (`CallEither`). Without them there was no food card, so no Feed button,
+  no small Feed button and no feed warning. Loyalty's "Loyalty Level 3
+  (Submissive)" is kept as its name (`PetStatus.LoyaltyName`).
+  `Food:FeedSpellName` falls back on `GetSpellInfo`. A catch-up that
+  touches these reads keeps the fallbacks. Tested in
+  `tools/test_erapetcalls.lua`.
+
 ## Not yet done
 - The rest of the plan (Era's pet calls as fallbacks, the probe in Era,
   data made again from Era's tables, the sister lists) is in the project's

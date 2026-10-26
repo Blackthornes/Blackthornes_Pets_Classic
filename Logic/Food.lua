@@ -241,7 +241,7 @@ local function ReadBuff(itemID)
         end
     end
     local itemSpell = (C_Item and C_Item.GetItemSpell) or _G.GetItemSpell
-    local describe = C_Spell and C_Spell.GetSpellDescription
+    local describe = (C_Spell and C_Spell.GetSpellDescription) or rawget(_G, "GetSpellDescription")
     if type(itemSpell) == "function" and type(describe) == "function" then
         local ok, _, spellID = pcall(itemSpell, itemID)
         spellID = ok and Plain(spellID)
@@ -477,6 +477,13 @@ function Food:FeedSpellName()
     local fn = C_Spell and C_Spell.GetSpellName
     if type(fn) == "function" then
         local ok, name = pcall(fn, FEED_PET)
+        name = ok and Plain(name)
+        if type(name) == "string" and name ~= "" then return name end
+    end
+    -- Era's older call, where C_Spell has no GetSpellName.
+    local info = rawget(_G, "GetSpellInfo")
+    if type(info) == "function" then
+        local ok, name = pcall(info, FEED_PET)
         name = ok and Plain(name)
         if type(name) == "string" and name ~= "" then return name end
     end
