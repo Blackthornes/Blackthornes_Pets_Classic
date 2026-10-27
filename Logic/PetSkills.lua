@@ -73,6 +73,14 @@ function PetSkills.FamilyID()
             end)
             if ok and type(found) == "string" then familyByName[found] = family end
         end
+        -- The English names too, from the beast list, for a client whose
+        -- family lookup gives nothing (Era may not have it).
+        local compendium = ns.CompendiumData and ns.CompendiumData.FAMILIES
+        for family, row in pairs(compendium or {}) do
+            if ids[family] and type(row[1]) == "string" and not familyByName[row[1]] then
+                familyByName[row[1]] = family
+            end
+        end
     end
     return familyByName[name]
 end

@@ -28,6 +28,17 @@ suite.check("there are pet trainers of both sides", (function()
     return a and h
 end)())
 
+-- Era: the family comes back as a name alone and there is no family
+-- lookup, so the English name is matched from the beast list.
+do
+    local oldFamily, oldInfo = _G.UnitCreatureFamily, _G.C_CreatureInfo
+    _G.UnitCreatureFamily = function() return "Cat" end
+    _G.C_CreatureInfo = nil
+    suite.check("a Cat is found by its English name with no family lookup", PetSkills.FamilyID() == 2,
+        tostring(PetSkills.FamilyID()))
+    _G.UnitCreatureFamily, _G.C_CreatureInfo = oldFamily, oldInfo
+end
+
 -- A boar at level 12 that knows Bite 1 and Charge 1; the hunter has learned
 -- Bite 2 from Beast Training.
 ns.charDB.beastTraining = nil
