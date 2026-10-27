@@ -71,12 +71,18 @@ function FeedButton:Build()
 end
 
 --- The quest tracker, if this client has one and it is on screen.
+-- Era has its quest list as QuestWatchFrame; newer clients the tracker.
+FeedButton.TRACKERS = { "ObjectiveTrackerFrame", "QuestWatchFrame" }
+
 local function Tracker()
-    local tracker = _G.ObjectiveTrackerFrame
-    if type(tracker) ~= "table" then return nil end
-    local ok, shown = pcall(tracker.IsVisible, tracker)
-    if not (ok and shown) then return nil end
-    return tracker
+    for _, name in ipairs(FeedButton.TRACKERS) do
+        local tracker = rawget(_G, name)
+        if type(tracker) == "table" and type(tracker.IsVisible) == "function" then
+            local ok, shown = pcall(tracker.IsVisible, tracker)
+            if ok and shown then return tracker end
+        end
+    end
+    return nil
 end
 
 --- Put the button just above the tracker's top left corner. It is placed by
