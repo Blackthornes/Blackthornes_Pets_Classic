@@ -83,6 +83,14 @@ Every Forever catch-up checks this note first, before sorting commits into
   `Food:FeedSpellName` falls back on `GetSpellInfo`. A catch-up that
   touches these reads keeps the fallbacks. Tested in
   `tools/test_erapetcalls.lua`.
+- Era's `UnitCreatureFamily` gives the family's name alone, and the family
+  lookup may be missing, so `PetSkills.FamilyID` also matches the English
+  names in `CompendiumData.FAMILIES` (`tools/test_petskills.lua`).
+- Era's quest list is `QuestWatchFrame`: the small Feed button looks for
+  it after `ObjectiveTrackerFrame` (`FeedButton.TRACKERS`,
+  `tools/test_feedbutton.lua`).
+- Spell names fall back on `GetSpellInfo` and `GetSpellSubtext` in
+  `Taming:SkillNames` and `TameRecord` (`tools/test_german.lua`).
 
 ## Not yet done
 - The rest of the plan (Era's pet calls as fallbacks, the probe in Era,

@@ -49,7 +49,7 @@ local function Changed()
 end
 
 local function SpellName(id)
-    return Call(C_Spell and C_Spell.GetSpellName, id)
+    return Call((C_Spell and C_Spell.GetSpellName) or _G.GetSpellInfo, id)
 end
 
 --- The pet's family: its name as the client gives it and its ID (the
@@ -183,7 +183,7 @@ function TameRecord:PetSkills()
     for slot = 1, (_G.NUM_PET_ACTION_SLOTS or 10) do
         local name, _, isToken, _, _, _, spellID = Call(getInfo, slot)
         if name and not isToken and type(spellID) == "number" then
-            local subtext = Call(C_Spell and C_Spell.GetSpellSubtext, spellID)
+            local subtext = Call((C_Spell and C_Spell.GetSpellSubtext) or _G.GetSpellSubtext, spellID)
             local rank = type(subtext) == "string" and tonumber(subtext:match("(%d+)"))
             -- Kept under the data's English name, so a tame on a client in
             -- another language lines up with Data/BeastSkills.lua.
