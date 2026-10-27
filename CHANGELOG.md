@@ -4,6 +4,11 @@ Versions follow [semantic versioning](https://semver.org): the middle number
 moves for new behaviour, the last for fixes alone. The newest version goes at
 the top; a release is refused if its version has no section here.
 
+## 0.3.0
+
+- The small Feed button has a new gold look.
+- Various bug fixes.
+
 ## 0.2.0
 
 - You can move the small Feed button by holding right-click and dragging it.
