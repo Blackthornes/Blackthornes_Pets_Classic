@@ -68,6 +68,17 @@ ObjectiveTrackerFrame._shown = false
 Refresh()
 suite.check("with no tracker it still shows, at the top right",
     button:IsShown() and button._point[1] == "TOPRIGHT", button._point[1])
+
+-- Era's quest list is QuestWatchFrame.
+_G.QuestWatchFrame = env.Stub({})
+function QuestWatchFrame:IsVisible() return true end
+function QuestWatchFrame:GetLeft() return 900 end
+function QuestWatchFrame:GetTop() return 650 end
+Refresh()
+suite.check("Era's quest list is found too",
+    button._point[1] == "BOTTOMLEFT" and button._point[4] == 900 and button._point[5] == 654,
+    tostring(button._point[4]) .. " " .. tostring(button._point[5]))
+_G.QuestWatchFrame = nil
 ObjectiveTrackerFrame._shown = true
 
 -- Combat: left alone, but put away as combat starts.

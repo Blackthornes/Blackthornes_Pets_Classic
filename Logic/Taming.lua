@@ -75,11 +75,13 @@ local NAME_TRIES = 3
 function Taming:SkillNames()
     if self.skillNames then return self.skillNames end
     local names, any = {}, false
-    local canAsk = Resolve("C_Spell.GetSpellName") ~= nil
+    -- Era may have only the older GetSpellInfo, whose first value is the name.
+    local ask = (Resolve("C_Spell.GetSpellName") and "C_Spell.GetSpellName")
+        or (Resolve("GetSpellInfo") and "GetSpellInfo")
     local function Learn(english, ids)
         names[english] = english
-        for _, id in ipairs(canAsk and ids or {}) do
-            local name = Call("C_Spell.GetSpellName", id)
+        for _, id in ipairs(ask and ids or {}) do
+            local name = Call(ask, id)
             if type(name) == "string" and name ~= "" then
                 any = true
                 names[name] = names[name] or english
@@ -103,7 +105,7 @@ function Taming:SkillNames()
         end
     end
     self.skillNameTries = (self.skillNameTries or 0) + 1
-    if any or not canAsk or self.skillNameTries >= NAME_TRIES then self.skillNames = names end
+    if any or not ask or self.skillNameTries >= NAME_TRIES then self.skillNames = names end
     return names
 end
 

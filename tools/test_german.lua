@@ -112,6 +112,18 @@ _G.GetNumCrafts, _G.GetCraftInfo = nil, nil
 suite.check("a German skill name turns English", ns.Taming:EnglishName("Beißen") == "Bite")
 suite.check("an English one stays", ns.Taming:EnglishName("Claw") == "Claw")
 
+-- Era may have only the older GetSpellInfo: the names still match.
+do
+    local spell, keptNames, keptTries = _G.C_Spell, ns.Taming.skillNames, ns.Taming.skillNameTries
+    _G.C_Spell = nil
+    _G.GetSpellInfo = function(id) return ({ [17253] = "Beißen", [17254] = "Beißen" })[id] end
+    ns.Taming.skillNames, ns.Taming.skillNameTries = nil, nil
+    suite.check("with only GetSpellInfo a German name still turns English",
+        ns.Taming:EnglishName("Beißen") == "Bite")
+    _G.C_Spell, _G.GetSpellInfo = spell, nil
+    ns.Taming.skillNames, ns.Taming.skillNameTries = keptNames, keptTries
+end
+
 -- A tame: the pet bar's skill is kept by its English name, and the family
 -- by its ID.
 local clock = 100
