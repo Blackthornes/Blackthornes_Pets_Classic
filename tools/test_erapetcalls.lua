@@ -27,6 +27,12 @@ suite.check("reads each food type", status.foods and #status.foods == 2
 suite.check("keeps only the loyalty name", status.loyalty == "Submissive", status.loyalty)
 suite.check("reads training points", status.trainingFree == 5)
 
+suite.check("keeps the loyalty level too", status.loyaltyLevel == 3, status.loyaltyLevel)
+suite.check("the level reads in any language",
+    PetStatus.LoyaltyLevelIn("Niveau de loyaut\195\169 5 (Fid\195\168le)") == 5)
+suite.check("full-width brackets keep only the name",
+    PetStatus.LoyaltyName("6\239\188\136X\239\188\137") == "X")
+suite.check("a plain name has no level", PetStatus.LoyaltyLevelIn("Faithful") == nil)
 suite.check("a plain loyalty name is left as it is", PetStatus.LoyaltyName("Faithful") == "Faithful")
 suite.check("no loyalty is nil", PetStatus.LoyaltyName(nil) == nil)
 
