@@ -1290,7 +1290,8 @@ function UI:ShowMeters(status, y)
     end
 
     if values.loyalty then
-        local level = UI.LoyaltyLevel(status.loyalty)
+        -- By name, else the level the classic client gives in any language.
+        local level = UI.LoyaltyLevel(status.loyalty) or status.loyaltyLevel
         for i, gem in ipairs(self.meters.loyalty.gems) do
             gem:SetShown(level ~= nil)
             gem:SetColorTexture(Theme.Unpack(level and i <= level and "accentHi" or "border"))

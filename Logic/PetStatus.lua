@@ -99,9 +99,18 @@ end
 --- Forever as "Submissive". Keep only the name.
 function PetStatus.LoyaltyName(text)
     if type(text) ~= "string" then return nil end
-    local inner = text:match("%((.-)%)%s*$")
+    local inner = text:match("%((.-)%)%s*$") or text:match("\239\188\136(.-)\239\188\137%s*$")
     if inner and inner ~= "" then return inner end
     return text
+end
+
+--- The classic client's loyalty line carries its level, 1 to 6, in every
+--- language; the name alone (Forever's) carries none. The level or nil.
+function PetStatus.LoyaltyLevelIn(text)
+    if type(text) ~= "string" then return nil end
+    local level = tonumber(text:match("(%d+)"))
+    if level and level >= 1 and level <= 6 then return level end
+    return nil
 end
 
 --- Everything the addon knows about the current pet, as a plain table.
@@ -139,7 +148,9 @@ function PetStatus:Read()
         status.loyaltyRate = Number(loyaltyRate)
     end
 
-    status.loyalty = PetStatus.LoyaltyName(Text(CallEither("C_PetInfo.GetPetLoyalty", "GetPetLoyalty")))
+    local loyalty = Text(CallEither("C_PetInfo.GetPetLoyalty", "GetPetLoyalty"))
+    status.loyalty = PetStatus.LoyaltyName(loyalty)
+    status.loyaltyLevel = PetStatus.LoyaltyLevelIn(loyalty)
 
     -- Forever gives the food types as one list; Era's own call gives them
     -- one value each, as the classic client always did.
