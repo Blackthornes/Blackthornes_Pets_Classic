@@ -4,6 +4,12 @@ Versions follow [semantic versioning](https://semver.org): the middle number
 moves for new behaviour, the last for fixes alone. The newest version goes at
 the top; a release is refused if its version has no section here.
 
+## 0.5.0
+
+- The minimap button has a new Blackthornes badge.
+- Show on Map now puts a gold marker on your map.
+- Various bug fixes.
+
 ## 0.4.0
 
 - One minimap button now opens all your Blackthornes add-ons.
