@@ -209,6 +209,20 @@ one belongs in all; Farmer's `CLAUDE.md` has the details); Pets' side is
 (`TomTomLink.Point`). Tested in `tools/test_travel.lua`. Not yet seen in
 game.
 
+Show on Map (a German player found nothing at the Crossroads; the owner
+said do all six fixes, 2026-10-29, in every addon): Forever turns the
+game's own map pin down, so a click on a beast in the compendium always
+lays our own gold marker (`UI/SpotMarker.lua`, the same file in Pets,
+Tradeskills, Butler and Farmer; Equipment's `MapPins:Spotlight` is the
+same look, a fix to one belongs in all): a gold ring with the beast's
+icon and name, two waves for `WAVE_FOR` seconds then a breathing glow
+(Effects Subtle a still glow, Off still). `Waypoints:Show(place, what,
+opts)` returns `true, gamePin`; with no game pin `Compendium:Pin` also
+points the beast arrow (`BeastArrow:Follow`), and the marker goes when
+you stand within `BeastArrow.ARRIVED` of it. A beast with only a zone
+gets a marker in the zone's middle, "Somewhere in ZONE", kept until the
+next Show. On Era, `Waypoints.ZONE_MAPS` leaves out Forever's own zones. Tested in `tools/test_showonmap.lua`. Not yet seen in game.
+
 Forever's CurseForge project ID is **1720056** (the owner created it 2026-09-30).
 This Classic Era copy's is **1763344** (2026-10-24), on the TOC's
 `X-Curse-Project-ID` line; never Forever's. The first release is 0.1.0.
