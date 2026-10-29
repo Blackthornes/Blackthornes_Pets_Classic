@@ -21,6 +21,13 @@ Copied over since, one at a time:
 - `f4b9961` Slim the shared minimap menu: names only, sized to fit (2026-10-29,
   taken as it is: `UI/SharedMinimap.lua` at FILE_VERSION 3 and its test, the
   same in all five Classic repos).
+- `fc724ba` Time arrow flights by their real length (2026-10-29, as it is).
+- `e8a5525` Show on Map always shows: our own marker and the arrow
+  (2026-10-29; Forever's own zones left out of `ZONE_MAPS`, the test uses
+  Durotar; `UI/SpotMarker.lua` is the same in Farmer, Butler, Tradeskills and
+  Pets Classic).
+- `dea75f5` (Butler's) the way there card's rows grow when a step wraps
+  (2026-10-29, `UI/TravelCard.lua` only).
 
 Every catch-up reads `docs/CLASSIC_DIFFERENCES.md` first, and the PR that
 brings Forever commits over updates the line above to the newest one it took.

@@ -97,3 +97,10 @@ Every Forever catch-up checks this note first, before sorting commits into
   data made again from Era's tables, the sister lists) is in the project's
   `pets-classic-plan.md`, one small PR each. Each step adds its line here.
 - Not yet seen in an Era client. Client calls are read in a pcall.
+
+### No Forever zones in the map list
+
+Forever added its own zones (Mount Hyjal, Zephras Isle, Riverglades,
+Shen'dralas) to `Waypoints.ZONE_MAPS` with its marker fix (2026-10-29).
+Era has none of them, so Classic's list stays as it was. A catch-up that
+adds them again leaves them out.
