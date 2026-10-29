@@ -16,21 +16,21 @@ local MAPS = {
     [1414] = { name = "Kalimdor", parentMapID = 947 },
     [947] = { name = "Azeroth", parentMapID = 0 },
     [1413] = { name = "The Barrens", parentMapID = 1414 },
-    [2521] = { name = "Zephras Isle", parentMapID = 1414 },
+    [1411] = { name = "Durotar", parentMapID = 1414 },
 }
 -- No SetUserWaypoint: the client takes no pin at all.
 _G.C_Map = {
     GetBestMapForUnit = function() return 1413 end,
     GetMapInfo = function(id) return MAPS[id] end,
     GetMapChildrenInfo = function()
-        return { { name = "The Barrens", mapID = 1413 }, { name = "Zephras Isle", mapID = 2521 } }
+        return { { name = "The Barrens", mapID = 1413 }, { name = "Durotar", mapID = 1411 } }
     end,
 }
 
 -- A client in another language finds these by ID, so they must be listed.
 local Z = Waypoints.ZONE_MAPS
-suite.check("Forever's own zones have a map ID", Z["Zephras Isle"] == 2521 and Z["Mount Hyjal"] == 2482
-    and Z["Riverglades"] == 2548 and Z["Shen'dralas"] == 2652)
+-- Era has none of Forever's own zones, so they stay out.
+suite.check("no Forever-only zones on Era", Z["Zephras Isle"] == nil and Z["Durotar"] == 1411)
 
 -- A beast with a spot: our marker, the arrow, the map.
 local followed
@@ -66,15 +66,15 @@ Marker:Clear()
 -- A beast with only a zone: a marker in the middle that says so, and it stays.
 followed, opened = nil, nil
 before = #env.chat
-local roamer = { id = 9999, name = "Isle Roamer", zone = "Zephras Isle" }
+local roamer = { id = 9999, name = "Isle Roamer", zone = "Durotar" }
 suite.check("a zone alone shows too", C:Pin(roamer) == true)
 light = Marker.current
-suite.check("a marker in the middle of the zone", light and light.map == 2521
+suite.check("a marker in the middle of the zone", light and light.map == 1411
     and light.x == 50 and light.y == 50 and light.area == true)
-suite.check("that says somewhere in it", light and light.name == "Somewhere in Zephras Isle", light and light.name)
-suite.check("chat says to head there", table.concat(env.chat, "\n", before + 1):find("head for Zephras Isle.", 1, true) ~= nil)
+suite.check("that says somewhere in it", light and light.name == "Somewhere in Durotar", light and light.name)
+suite.check("chat says to head there", table.concat(env.chat, "\n", before + 1):find("head for Durotar.", 1, true) ~= nil)
 suite.check("the arrow heads for it", followed == roamer)
-suite.check("and the zone's map opens", opened == 2521, opened)
+suite.check("and the zone's map opens", opened == 1411, opened)
 suite.check("a zone marker never goes by itself", Marker:Done(5) == false)
 ns.BeastArrow.Follow = follow
 
@@ -83,7 +83,7 @@ suite.check("a zone with no map fails", Waypoints:Show({ zone = "Nowhere" }, "it
 
 -- The marker on the world map: only on its own map, placed by the canvas.
 local canvas = env.Stub({ _width = 1000, _height = 600 })
-local shownMap = 2521
+local shownMap = 1411
 _G.WorldMapFrame = env.Stub({
     _shown = true,
     GetCanvas = function() return canvas end,
