@@ -179,8 +179,10 @@ function MinimapButton:JoinShared()
         ns.SharedWindow:Join({
             key = "pets", order = 3, name = "Pets", icon = ICON,
             open = function() MinimapButton:Open() end,
-            settings = function() if ns.SettingsUI then ns.SettingsUI:Toggle() end end,
+            settings = function() if ns.SettingsUI then ns.SettingsUI:Show() end end,
             db = function() return ns.db end,
+            -- The Pet, Compendium and Settings tabs show in it (UI/PetsTabs.lua).
+            host = ns.PetsTabs and ns.PetsTabs.host or nil,
         })
     end
 end
