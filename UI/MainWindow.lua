@@ -164,7 +164,7 @@ function UI:Build()
     -- Pet, Compendium and Settings hang below it (UI/PetsTabs.lua).
     if ns.PetsTabs then ns.PetsTabs:Attach(self, "pet") end
     -- Inside the one window, it closes with this one.
-    frame:HookScript("OnHide", function() if ns.PetsTabs then ns.PetsTabs:Closed() end end)
+    frame:HookScript("OnHide", function() if ns.PetsTabs then ns.PetsTabs:Closed(frame) end end)
     self:BuildHeader()
 
     local empty = Theme.CreateLabel(frame, "normal", "muted")

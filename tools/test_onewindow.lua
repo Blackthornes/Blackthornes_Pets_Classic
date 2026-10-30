@@ -48,6 +48,13 @@ suite.check("the one window stays up", hub.frame:IsShown() and Tabs:Hosted())
 Tabs:Open("settings")
 suite.check("Settings is in the same area", SettingsUI.frame:GetParent() == area and Tabs:Current() == "settings")
 
+-- A window built for the first time hides itself before it is laid in
+-- (a player's report, 2026-10-30: picking another addon on the rail once
+-- turned the one window into that addon's own window).
+local fresh = { GetParent = function() return UIParent end }
+Tabs:Closed(fresh)
+suite.check("a window not yet laid in hiding keeps the one window", hub.frame:IsShown() and Tabs:Hosted())
+
 -- 4.
 ns.db.windowLeft, ns.db.windowTop = 300, 650
 hub.frame:Hide()
