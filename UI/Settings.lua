@@ -132,7 +132,7 @@ function SettingsUI:Build()
     self.frame = frame
     if ns.PetsTabs then ns.PetsTabs:Attach(self, "settings") end
     -- Inside the one window, it closes with this one.
-    frame:HookScript("OnHide", function() if ns.PetsTabs then ns.PetsTabs:Closed() end end)
+    frame:HookScript("OnHide", function() if ns.PetsTabs then ns.PetsTabs:Closed(frame) end end)
     -- The pets window puts its Feed button away while this is open.
     if ns.UI and ns.UI.WatchCover then ns.UI:WatchCover(frame) end
     self.controls = {}
