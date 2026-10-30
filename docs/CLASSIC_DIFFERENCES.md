@@ -114,3 +114,7 @@ adds them again leaves them out.
 - A compendium row is the beast's name and its rare or elite tag only;
   there is no Forever tag.
 
+## The one window
+
+- `UI/SharedWindow.lua` is Classic's own (2026-10-30); Forever has no copy
+  yet. Nothing shows until "One Window:" is ticked.
