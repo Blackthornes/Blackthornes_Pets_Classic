@@ -375,6 +375,20 @@ rename them: `oneWindow`, `oneWindowAt` (the newest wins), `oneWindowPick`,
 & Loot, arrows, plaques, loot feed, XP bar) stay their own. Tested in
 `tools/test_sharedwindow.lua`. Not yet seen in game.
 
+Pets' pages are in (2026-10-30, after Butler's): "One Window:" sits under
+"Combine Addon Buttons:" on the General page (`SettingsUI:SetOneWindow`,
+writing every save). Pets joins with `host = PetsTabs.host`;
+`PetsTabs:Enter(area)` lays the Pet, Compendium and Settings windows into
+the area (`LayIn`: parented to it, filling it, scale 1, their own trim,
+size grip and rim put out of sight, `Bare`; the hanging tabs under the
+one window's edge) and grows the one window to the shared size (`Grow`);
+`Leave` gives them back their place, size and scale (`LayOut`). Each
+window's `Show` asks `PetsTabs:Route` first, which opens the one window
+on Pets when it is ticked; a tab closing by itself closes the one window
+(`PetsTabs:Closed`, skipped while `switching` or `leaving`). The Feed
+buttons are placed by screen position as before. Tested in
+`tools/test_onewindow.lua`.
+
 ## The shared minimap button
 
 A player asked, the owner said build it from a mockup (2026-10-28), in all

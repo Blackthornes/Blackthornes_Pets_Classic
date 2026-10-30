@@ -118,3 +118,5 @@ adds them again leaves them out.
 
 - `UI/SharedWindow.lua` is Classic's own (2026-10-30); Forever has no copy
   yet. Nothing shows until "One Window:" is ticked.
+- Pets' Pet, Compendium and Settings tabs move into it when ticked
+  (`PetsTabs.host`, `Route`, `Closed`); Forever's PetsTabs has none of it.
