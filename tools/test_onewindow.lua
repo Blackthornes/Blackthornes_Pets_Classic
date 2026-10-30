@@ -2,7 +2,7 @@
 -- said build it, 2026-10-30).
 --
 -- What must hold:
---   1. Off unless ticked: the Pets window opens in its own place.
+--   1. On unless unticked; unticked, the Pets window opens in its own place.
 --   2. Ticked, opening Pets opens the one window on Pets, with the Pet tab
 --      laid into its area, bare of its own rim and grip.
 --   3. The Compendium and Settings open in the same area; one tab at a time.
@@ -23,6 +23,9 @@ suite.check("Pets joins with its pages", hub.entries.pets and hub.entries.pets.h
 suite.check("the one window is Pets' own copy", Tabs.One() == SW)
 
 -- 1.
+ns.db.oneWindow = nil
+suite.check("on unless unticked", SW.On())
+ns.db.oneWindow = false
 UI:Show()
 suite.check("off: the Pets window opens by itself", UI.frame:IsShown() and not Tabs:Hosted())
 UI:Hide()

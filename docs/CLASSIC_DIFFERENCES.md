@@ -117,7 +117,8 @@ adds them again leaves them out.
 ## The one window
 
 - `UI/SharedWindow.lua` is Classic's own (2026-10-30); Forever has no copy
-  yet. Nothing shows until "One Window:" is ticked.
+  yet. "One Window:" is on unless unticked (2026-10-30). At the auction
+  house only Tradeskills shows in it.
 - Pets' Pet, Compendium and Settings tabs move into it when ticked
   (`PetsTabs.host`, `Route`, `Closed`); Forever's PetsTabs has none of it.
 - Docking beside the auction house, mailbox, vendor and trainer (2026-10-30) is in the
