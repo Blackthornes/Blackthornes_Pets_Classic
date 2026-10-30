@@ -28,6 +28,15 @@ Copied over since, one at a time:
   Pets Classic).
 - `dea75f5` (Butler's) the way there card's rows grow when a step wraps
   (2026-10-29, `UI/TravelCard.lua` only).
+- `765faba` Settings: "Show Descriptions" in Title Case (2026-10-29,
+  Forever PR #144, as it is).
+- `67399d8` One look across the five addons (2026-10-29, Forever PR #156):
+  `UI/HouseKit.lua`, `UI/RowMenu.lua`, `UI/Notice.lua` and
+  `UI/SharedChoices.lua` as they are (the same in all five Classic repos),
+  the compendium's one-line rows, chips and footer, Title Case buttons and
+  the General page. Left out: Arrow Size and the compendium's Forever tag.
+  `UI/Plaque.lua` keeps Classic's own copy with the new `Plaque.TextWidth`,
+  the same in Farmer, Pets, Equipment and Tradeskills Classic.
 
 Every catch-up reads `docs/CLASSIC_DIFFERENCES.md` first, and the PR that
 brings Forever commits over updates the line above to the newest one it took.
