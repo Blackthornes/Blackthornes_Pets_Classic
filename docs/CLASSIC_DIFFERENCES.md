@@ -120,5 +120,5 @@ adds them again leaves them out.
   yet. Nothing shows until "One Window:" is ticked.
 - Pets' Pet, Compendium and Settings tabs move into it when ticked
   (`PetsTabs.host`, `Route`, `Closed`); Forever's PetsTabs has none of it.
-- Docking beside the mailbox, vendor and trainer (2026-10-30) is in the
+- Docking beside the auction house, mailbox, vendor and trainer (2026-10-30) is in the
   shared file, so Forever has none of it either.
