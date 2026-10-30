@@ -104,3 +104,13 @@ Forever added its own zones (Mount Hyjal, Zephras Isle, Riverglades,
 Shen'dralas) to `Waypoints.ZONE_MAPS` with its marker fix (2026-10-29).
 Era has none of them, so Classic's list stays as it was. A catch-up that
 adds them again leaves them out.
+
+## The house look (2026-10-29)
+
+- Brought over from Forever's "One look across the five addons". The game
+  calls it uses (`CreateFrame`, `C_Timer.After`, `GetTime`, the usual frame
+  methods) are all in Era, so nothing needed a fallback.
+- No Arrow Size here: the shared choice is heard and left alone.
+- A compendium row is the beast's name and its rare or elite tag only;
+  there is no Forever tag.
+
