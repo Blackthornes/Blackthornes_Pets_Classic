@@ -167,7 +167,8 @@ function SettingsUI:Build()
     local fit = pages.Fit
     pages.Fit = function(page)
         fit(page)
-        if ns.PetsTabs then ns.PetsTabs:Need("settings", frame:GetWidth(), frame:GetHeight()) end
+        local need = page.need or { frame:GetWidth(), frame:GetHeight() }
+        if ns.PetsTabs then ns.PetsTabs:Need("settings", need[1], need[2]) end
     end
     pages:Fit()
 
