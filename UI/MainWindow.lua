@@ -705,8 +705,10 @@ UI.DEMON_NAMES = {
     Felhunter = L["Felhunter"],
 }
 
---- A copper amount in coin colours: "1g 80s".
+--- A copper amount in the game's coins, white numbers (UI/Coins.lua);
+--- without it in coin colours: "1g 80s".
 function UI.Money(copper)
+    if ns.Coins then return ns.Coins.Text(math.floor(tonumber(copper) or 0)) end
     copper = math.floor(tonumber(copper) or 0)
     local gold, silver, rest = math.floor(copper / 10000), math.floor(copper / 100) % 100, copper % 100
     local parts = {}
