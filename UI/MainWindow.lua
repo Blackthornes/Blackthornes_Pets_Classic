@@ -593,6 +593,7 @@ function UI:BuildStatus()
     local icon = slot:CreateTexture(nil, "ARTWORK")
     icon:SetPoint("TOPLEFT", 1, -1)
     icon:SetPoint("BOTTOMRIGHT", -1, 1)
+    if ns.ItemLook then ns.ItemLook.Attach(icon) end
     local count = Theme.CreateLabel(slot, "small", "text", "RIGHT")
     count:SetPoint("BOTTOMRIGHT", -2, 2)
     if count.SetShadowColor then
@@ -1341,6 +1342,14 @@ function UI:ShowFood(status, top)
         if icon then self.foodIcon:SetTexture(icon) end
         self.foodCount:SetText(tostring(total))
         self.foodName:SetText(ns.Food.ShownName(best))
+        -- The name and the icon's thin ring in the food's quality colour.
+        local quality = ns.ItemLook and ns.ItemLook.SetItem(self.foodIcon, best.itemID)
+        local r, g, b = ns.ItemLook and ns.ItemLook.Color(quality)
+        if r then
+            self.foodName:SetTextColor(r, g, b)
+        else
+            self.foodName:SetTextColor(Theme.Unpack("text"))
+        end
         local sub = L.Format("%d in your bags (%s)", total, ns.Food:EffectLabel(best.effect))
         if total < ns.Food.LOW_FOOD then
             sub = sub .. (", |c%s%s|r"):format(ns.COLORS.warn, L["running low"])
@@ -1349,6 +1358,7 @@ function UI:ShowFood(status, top)
     else
         self.foodCount:SetText("")
         self.foodName:SetText(L["No food"])
+        self.foodName:SetTextColor(Theme.Unpack("text"))
         self.rows.food.value:SetText(("|c%s%s|r"):format(ns.COLORS.bad, L["None in your bags"]))
     end
 
