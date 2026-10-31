@@ -37,6 +37,11 @@ Copied over since, one at a time:
   the General page. Left out: Arrow Size and the compendium's Forever tag.
   `UI/Plaque.lua` keeps Classic's own copy with the new `Plaque.TextWidth`,
   the same in Farmer, Pets, Equipment and Tradeskills Classic.
+- `53ba8c3` One Window steps aside for an open letter (2026-10-31): docked at
+  the mailbox it moves beside the letter and back, and tells side panels
+  when it docks, moves or undocks (`SharedWindow.Watch`, `DockedFrame`).
+  `UI/SharedWindow.lua` is FILE_VERSION 5, the same in all five Classic
+  repos.
 
 Every catch-up reads `docs/CLASSIC_DIFFERENCES.md` first, and the PR that
 brings Forever commits over updates the line above to the newest one it took.
