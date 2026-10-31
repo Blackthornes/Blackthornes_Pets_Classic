@@ -603,10 +603,16 @@ function UI:BuildStatus()
     local foodName = Theme.CreateLabel(line, "normal", "text")
     foodName:SetPoint("TOPLEFT", slot, "TOPRIGHT", 10, -2)
     foodName:SetPoint("RIGHT", line, "RIGHT", -8, 0)
+    -- The mark before the line under it (UI/Marks.lua): a paw for food it
+    -- eats, a star for buff food, fed last.
+    local foodMark = line:CreateTexture(nil, "ARTWORK")
+    if ns.Marks then ns.Marks.Attach(foodMark) else foodMark:Hide() end
+    foodMark:SetPoint("TOPLEFT", foodName, "BOTTOMLEFT", 0, -3)
     local foodSub = Theme.CreateLabel(line, "small", "muted")
     foodSub:SetPoint("TOPLEFT", foodName, "BOTTOMLEFT", 0, -3)
     foodSub:SetPoint("RIGHT", line, "RIGHT", -8, 0)
     self.foodIcon, self.foodCount, self.foodName = icon, count, foodName
+    self.foodMark, self.foodNameLabel = foodMark, foodName
     self.rows.food = { value = foodSub }
 
     -- How long the food lasts, as a gold bar and the words under it.
@@ -1322,6 +1328,32 @@ function UI:ShowMeters(status, y)
     return y
 end
 
+--- The mark for a food the pet is fed (UI/Marks.lua): "buff" for buff
+--- food, else "eats".
+function UI.FoodMark(stack)
+    if not stack then return nil end
+    local buff = ns.Food and ns.Food.IsBuffFood and ns.Food:IsBuffFood(stack.itemID)
+    return buff and "buff" or "eats"
+end
+
+--- Shows the food line's mark, or none, and moves the words past it, in
+--- the mark's colour.
+function UI.PlaceFoodMark(self, kind)
+    local mark, value = rawget(self, "foodMark"), self.rows and self.rows.food and self.rows.food.value
+    if not mark or not value then return end
+    local Marks = ns.Marks
+    if Marks then Marks.Set(mark, kind) else mark:Hide() end
+    local gap = (kind and Marks) and (Marks.SIZE + 3) or 0
+    if value.ClearAllPoints then value:ClearAllPoints() end
+    value:SetPoint("TOPLEFT", self.foodNameLabel, "BOTTOMLEFT", gap, -3)
+    value:SetPoint("RIGHT", value:GetParent(), "RIGHT", -8, 0)
+    if kind and Marks then
+        Marks.Paint(value, kind)
+    else
+        value:SetTextColor(Theme.Unpack("muted"))
+    end
+end
+
 --- The food card: the food it eats next, how long the bags will keep it
 --- happy, and what it eats. Returns the stacks, best first.
 function UI:ShowFood(status, top)
@@ -1355,7 +1387,9 @@ function UI:ShowFood(status, top)
             sub = sub .. (", |c%s%s|r"):format(ns.COLORS.warn, L["running low"])
         end
         self.rows.food.value:SetText(sub)
+        UI.PlaceFoodMark(self, UI.FoodMark(best))
     else
+        UI.PlaceFoodMark(self, nil)
         self.foodCount:SetText("")
         self.foodName:SetText(L["No food"])
         self.foodName:SetTextColor(Theme.Unpack("text"))

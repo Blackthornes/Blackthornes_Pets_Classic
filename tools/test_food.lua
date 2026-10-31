@@ -176,6 +176,12 @@ Food:BagsChanged()
 local UI = ns.UI
 UI:Show()
 suite.check("the food card names the food", UI.foodName:GetText() == "Tough Jerky", UI.foodName:GetText())
+suite.check("food it eats has the paw", ns.Marks.KindOf(UI.foodMark) == "eats", tostring(ns.Marks.KindOf(UI.foodMark)))
+local realBuff = ns.Food.IsBuffFood
+ns.Food.IsBuffFood = function() return true end
+suite.check("buff food has the star", UI.FoodMark({ itemID = 1 }) == "buff")
+ns.Food.IsBuffFood = realBuff
+suite.check("no food, no mark", UI.FoodMark(nil) == nil)
 suite.check("and how many are in the bags",
     UI.rows.food.value:GetText():find("30 in your bags (full)", 1, true), UI.rows.food.value:GetText())
 suite.check("with the count on its icon", UI.foodCount:GetText() == "30")
