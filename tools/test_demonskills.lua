@@ -107,6 +107,8 @@ _G.GetMerchantNumItems, _G.GetMerchantItemID, _G.GetMerchantItemInfo, _G.UnitGUI
 local UI = ns.UI
 suite.check("coin in gold, silver and copper", UI.Money(17500):find("1") and UI.Money(17500):find("75")
     and not UI.Money(17500):find("0c"))
+suite.check("in the game's coins, with copper left out", UI.Money(17500):find("UI%-GoldIcon") ~= nil
+    and UI.Money(17500):find("UI%-SilverIcon") ~= nil and UI.Money(17500):find("UI%-CopperIcon") == nil)
 plan = DemonSkills:Plan("Voidwalker", {}, 32)
 local lines = UI.DemonSkillLines(plan, "learn")
 local bought
