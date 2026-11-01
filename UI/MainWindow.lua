@@ -825,19 +825,47 @@ function UI:BuildSkills()
     CardHeading(card, L["SKILLS"])
     card:Hide()
     self.skillsCard = card
+
+    -- The window keeps its size (the owner, 2026-11-01), so the lines
+    -- under the heading scroll when they need more room than the card has.
+    local scroll = CreateFrame("ScrollFrame", nil, card)
+    scroll:SetPoint("TOPLEFT", card, "TOPLEFT", 1, -(CARD_HEAD + 1))
+    scroll:SetPoint("BOTTOMRIGHT", card, "BOTTOMRIGHT", -1, 2)
+    local inner = CreateFrame("Frame", nil, scroll)
+    inner:SetSize(1, 1)
+    pcall(scroll.SetScrollChild, scroll, inner)
+    scroll:EnableMouseWheel(true)
+    scroll:SetScript("OnMouseWheel", function(_, delta)
+        UI:SetSkillOffset((UI.skillOffset or 0) - delta * SKILL_ROW * 2)
+    end)
+    scroll:SetScript("OnSizeChanged", function() UI:UpdateSkillScroll() end)
+    local track = card:CreateTexture(nil, "OVERLAY")
+    track:SetColorTexture(Theme.Unpack("border"))
+    track:SetWidth(4)
+    track:SetPoint("TOPRIGHT", scroll, "TOPRIGHT", -2, -2)
+    track:SetPoint("BOTTOMRIGHT", scroll, "BOTTOMRIGHT", -2, 2)
+    track:Hide()
+    local thumb = card:CreateTexture(nil, "OVERLAY", nil, 1)
+    thumb:SetColorTexture(Theme.Unpack("accent"))
+    thumb:SetWidth(4)
+    thumb:Hide()
+    self.skillScroll, self.skillInner = scroll, inner
+    self.skillTrack, self.skillThumb = track, thumb
+    self.skillOffset = 0
+
     self.skillHeads = {
-        known = SkillHeading(card, L["YOUR PET KNOWS"], L["RANK"]),
-        learn = SkillHeading(card, L["CAN LEARN NOW"], L["COST"]),
-        later = SkillHeading(card, L["LATER"], L["WHEN"]),
+        known = SkillHeading(inner, L["YOUR PET KNOWS"], L["RANK"]),
+        learn = SkillHeading(inner, L["CAN LEARN NOW"], L["COST"]),
+        later = SkillHeading(inner, L["LATER"], L["WHEN"]),
     }
     self.skillRows = {}
 
-    local chips = CreateFrame("Frame", nil, card)
+    local chips = CreateFrame("Frame", nil, inner)
     chips:SetHeight(CHIP_ROW)
     chips:Hide()
     self.demonChips, self.demonChipRow = {}, chips
 
-    local foot = CreateFrame("Frame", nil, card)
+    local foot = CreateFrame("Frame", nil, inner)
     foot:SetHeight(SKILL_FOOT)
     Theme.Fill(foot, "glass")
     local way = Widgets.CreateButton(foot, L["Show the Way"], function() UI:ShowTheWayToTrainer() end,
@@ -930,7 +958,8 @@ function UI:ShowSkills(plan, trainer, top)
     self.skillHeads.known.left:SetText(demon and L["YOUR DEMON KNOWS"] or L["YOUR PET KNOWS"])
     self.skillHeads.learn.left:SetText(demon and L["CAN BUY NOW"] or L["CAN LEARN NOW"])
 
-    local y, used = -(CARD_HEAD + 1), 0
+    local inner = self.skillInner
+    local y, used = 0, 0
     y = self:ShowDemonChips(demon and plan or nil, y)
     for _, section in ipairs({ "known", "learn", "later" }) do
         local head = self.skillHeads[section]
@@ -938,14 +967,14 @@ function UI:ShowSkills(plan, trainer, top)
         head:SetShown(#lines > 0)
         if #lines > 0 then
             head:ClearAllPoints()
-            head:SetPoint("TOPLEFT", card, "TOPLEFT", 1, y)
-            head:SetPoint("TOPRIGHT", card, "TOPRIGHT", -1, y)
+            head:SetPoint("TOPLEFT", inner, "TOPLEFT", 0, y)
+            head:SetPoint("TOPRIGHT", inner, "TOPRIGHT", 0, y)
             y = y - SKILL_HEAD
             for index, line in ipairs(lines) do
                 used = used + 1
                 local row = self.skillRows[used]
                 if not row then
-                    row = CreateSkillRow(card)
+                    row = CreateSkillRow(inner)
                     self.skillRows[used] = row
                 end
                 row.glassKey = index % 2 == 1 and "glass" or "glassAlt"
@@ -955,8 +984,8 @@ function UI:ShowSkills(plan, trainer, top)
                 row.value:SetTextColor(Theme.Unpack(line.muted and "muted" or "text"))
                 row.beast = line.beast
                 row:ClearAllPoints()
-                row:SetPoint("TOPLEFT", card, "TOPLEFT", 1, y)
-                row:SetPoint("TOPRIGHT", card, "TOPRIGHT", -1, y)
+                row:SetPoint("TOPLEFT", inner, "TOPLEFT", 0, y)
+                row:SetPoint("TOPRIGHT", inner, "TOPRIGHT", 0, y)
                 row:Show()
                 y = y - SKILL_ROW
             end
@@ -970,11 +999,56 @@ function UI:ShowSkills(plan, trainer, top)
         self.skillTrainer:SetText(demon and L.Format("Demon trainer: %s", ("%s, %s"):format(trainer.name or "", trainer.zone))
             or L.Format("Pet trainer: %s", ("%s, %s"):format(trainer.name, trainer.zone)))
         self.skillFoot:ClearAllPoints()
-        self.skillFoot:SetPoint("TOPLEFT", card, "TOPLEFT", 1, y - 2)
-        self.skillFoot:SetPoint("TOPRIGHT", card, "TOPRIGHT", -1, y - 2)
+        self.skillFoot:SetPoint("TOPLEFT", inner, "TOPLEFT", 0, y - 2)
+        self.skillFoot:SetPoint("TOPRIGHT", inner, "TOPRIGHT", 0, y - 2)
         y = y - 2 - SKILL_FOOT
     end
-    return -y + 2
+    self.skillContent = -y
+    self:UpdateSkillScroll()
+    return CARD_HEAD + 1 - y + 2
+end
+
+--- How far the skills card's lines can scroll, and how much shows.
+function UI:SkillRange()
+    local scroll = self.skillScroll
+    if not scroll then return 0, 0, 0 end
+    local ok, view = pcall(scroll.GetHeight, scroll)
+    view = ok and tonumber(view) or 0
+    local full = self.skillContent or 0
+    return math.max(0, full - view), view, full
+end
+
+function UI:SetSkillOffset(offset)
+    local range, view, full = self:SkillRange()
+    offset = math.max(0, math.min(range, tonumber(offset) or 0))
+    self.skillOffset = offset
+    if self.skillScroll then pcall(self.skillScroll.SetVerticalScroll, self.skillScroll, offset) end
+    local thumb = self.skillThumb
+    if thumb then
+        if range > 0.5 and full > 0 then
+            local size = math.max(16, view * view / full)
+            thumb:SetHeight(size)
+            thumb:ClearAllPoints()
+            thumb:SetPoint("TOPRIGHT", self.skillScroll, "TOPRIGHT", -2,
+                -(2 + (view - 4 - size) * offset / range))
+            thumb:Show()
+        else
+            thumb:Hide()
+        end
+    end
+end
+
+--- Size the lines to the card and show the bar when they need to scroll.
+function UI:UpdateSkillScroll()
+    local scroll, inner = self.skillScroll, self.skillInner
+    if not (scroll and inner) then return end
+    local range = self:SkillRange()
+    local ok, width = pcall(scroll.GetWidth, scroll)
+    width = ok and tonumber(width) or 0
+    if width > 0 then inner:SetWidth(range > 0.5 and width - 10 or width) end
+    inner:SetHeight(math.max(1, self.skillContent or 0))
+    self.skillTrack:SetShown(range > 0.5)
+    self:SetSkillOffset(self.skillOffset or 0)
 end
 
 --- What a dim chip says for a demon still to come, and its hover.
@@ -1001,8 +1075,8 @@ function UI:ShowDemonChips(plan, y)
         return y
     end
     row:ClearAllPoints()
-    row:SetPoint("TOPLEFT", self.skillsCard, "TOPLEFT", 1, y)
-    row:SetPoint("TOPRIGHT", self.skillsCard, "TOPRIGHT", -1, y)
+    row:SetPoint("TOPLEFT", self.skillInner, "TOPLEFT", 0, y)
+    row:SetPoint("TOPRIGHT", self.skillInner, "TOPRIGHT", 0, y)
     row:Show()
     local x, lines = 12, 1
     local ok, width = pcall(self.skillsCard.GetWidth, self.skillsCard)
@@ -1486,9 +1560,9 @@ function UI:ShowStatus(status)
 end
 
 --- The skills card under the food and fight cards. With it, the two cards
---- are as tall as the fuller of them, the skills card fills what is left
---- and the window grows to fit, never below its usual height. Without it,
---- the cards fill the window as they always have.
+--- are as tall as the fuller of them, the skills card fills what is left,
+--- its lines scroll when they need more room, and the window keeps its
+--- size. Without it, the cards fill the window as they always have.
 function UI:ShowSkillsUnder(top, feeding, foodEnd, fightEnd)
     local plan = ns.PetSkills and ns.PetSkills:Current()
     local trainer = plan and ns.PetSkills:Trainer()
@@ -1516,12 +1590,13 @@ function UI:ShowSkillsUnder(top, feeding, foodEnd, fightEnd)
     local skillsTop = top - cardsHeight - GAP
     local skillsHeight = self:ShowSkills(plan, trainer, skillsTop)
     if not skillsHeight then
-        self:SetPetHeight(math.max(HEIGHT, HEADER + GAP + (-top + cardsHeight) + FOOT))
+        self:SetPetHeight(HEIGHT)
         return
     end
-    local needed = HEADER + GAP + (-skillsTop + skillsHeight) + FOOT
+    -- The card fills what is left; its lines scroll when they need more.
     self.skillsCard:SetPoint("BOTTOMRIGHT", self.body, "BOTTOMRIGHT", 0, 0)
-    self:SetPetHeight(math.max(HEIGHT, needed))
+    self:SetPetHeight(HEIGHT)
+    self:UpdateSkillScroll()
 end
 
 --- How tall the Pet tab needs to be. Every tab grows with it when it needs

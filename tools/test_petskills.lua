@@ -119,4 +119,18 @@ suite.check("the Compendium opens", ns.CompendiumUI.frame:IsShown())
 suite.check("searching for the skill", ns.CompendiumUI.search:GetText() == "Charge")
 suite.check("in the Pet tab's place", not UI.frame:IsShown())
 
+-- A long skills list scrolls in its card; the window keeps its size.
+local long = { known = {}, learn = {}, later = {} }
+for i = 1, 30 do long.known[i] = { name = "Skill " .. i, rank = 1 } end
+local cardHeight = UI:ShowSkills(long, nil, -200)
+suite.check("every line is laid out", UI.skillContent >= 30 * 22, tostring(UI.skillContent))
+suite.check("the card says how tall its lines are", cardHeight > UI.skillContent)
+local range = UI:SkillRange()
+suite.check("the lines can scroll", range > 0, tostring(range))
+UI:SetSkillOffset(10 ^ 6)
+suite.check("scrolling stops at the end", UI.skillOffset == range)
+UI:SetSkillOffset(-5)
+suite.check("and at the top", UI.skillOffset == 0)
+suite.check("the Pet tab asks for no more room", (UI.petHeight or 452) <= 452)
+
 suite.done()
