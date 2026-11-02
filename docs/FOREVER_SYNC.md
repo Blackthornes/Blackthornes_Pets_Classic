@@ -3,8 +3,9 @@
 Where this Classic Era copy stands against Forever Pets
 (`Blackthornes/Blackthornes_Pets`). Forever is only ever read from here.
 
-Last Forever commit copied over: `dfc8d41` (Forever main, the merge of its
-PR #138, 2026-10-24). This copy was made from it with its history on
+Last Forever commit copied over: `9a174be` (Forever main, 2026-11-02).
+The first copy was made from `dfc8d41` (Forever main, the merge of
+its PR #138, 2026-10-24). This copy was made from it with its history on
 2026-10-24.
 
 Copied over since, one at a time:
@@ -42,6 +43,10 @@ Copied over since, one at a time:
   when it docks, moves or undocks (`SharedWindow.Watch`, `DockedFrame`).
   `UI/SharedWindow.lua` is FILE_VERSION 5, the same in all five Classic
   repos.
+- `9a174be` The nearest pet trainer reads both of `GetWorldPosFromMapPos`'s
+  answers, so one in another zone no longer errors (2026-11-02, as it is).
+- `2f75585` Set Default under Window Position keeps Settings in the one
+  window (2026-11-02, as it is).
 
 Every catch-up reads `docs/CLASSIC_DIFFERENCES.md` first, and the PR that
 brings Forever commits over updates the line above to the newest one it took.
