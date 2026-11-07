@@ -47,6 +47,12 @@ Copied over since, one at a time:
   answers, so one in another zone no longer errors (2026-11-02, as it is).
 - `2f75585` Set Default under Window Position keeps Settings in the one
   window (2026-11-02, as it is).
+- Picked fixes (2026-11-07, the owner said yes): the folded One Window
+  opens full after docking (`UI/SharedWindow.lua` FILE_VERSION 8, the same
+  in all five Classic repos), `78ab8d8` buff food is no longer fed as plain
+  food, and `62d6cc8` food is found when the game names the diet in French,
+  Spanish, Russian or Chinese (its `Logic/Food.lua` words added by hand).
+  The Pet XP bar and the other commits since `9a174be` are not taken yet.
 
 Every catch-up reads `docs/CLASSIC_DIFFERENCES.md` first, and the PR that
 brings Forever commits over updates the line above to the newest one it took.

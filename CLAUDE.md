@@ -59,7 +59,7 @@ the pets window and the hunter's feed warning (`Logic/PetStatus.lua`), built
 on the `C_PetInfo` calls the probe found, and the food helper
 (`Logic/Food.lua`, `Data/PetFood.lua`, foods by item ID with their
 English name, IDs filled in by `tools/petfood_ids.py` from pfQuest, the
-client's diet words mapped in `DIET_WORDS` so a German client works too):
+client's diet words mapped in `DIET_WORDS` so every language the addon speaks works):
 food in the bags by diet, a secure
 Feed button kept outside the window so the window still closes in combat,
 a low food warning, and a small Feed button above the quest tracker while the
@@ -418,6 +418,12 @@ an addon closing it on leaving a place, `SharedWindow.Close(true)`, lets it
 go back to the addon open before (`hub.byItself`, read in OnHide). Butler
 passes it from `UI:LeftVendor` and `LeftPlace` (`ButlerTabs:Closed(frame,
 byItself)`). Tested in `tools/test_sharedwindow.lua`.
+
+Folded and docked (2026-11-07, FILE_VERSION 8, from Forever): docked or
+undocked while folded with the fold gem, the sizes are worked from the
+size it opens back up to (`SharedWindow.FullSize`, FoldWindow's
+`state.width`/`state.full`), never the folded strip's, so it never opens
+squashed.
 
 Pets' pages are in (2026-10-30, after Butler's): "One Window:" sits under
 "Combine Addon Buttons:" on the General page (`SettingsUI:SetOneWindow`,
