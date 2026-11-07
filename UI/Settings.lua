@@ -432,6 +432,29 @@ function SettingsUI:BuildPages()
     end, false)
     controls.stoneReminder:SetPoint("TOPLEFT", CONTROL_X, -2)
 
+    -- The Shard Tracker (UI/ShardTracker.lua): shards and stones on screen
+    -- once Drain Soul is learned. Off unless ticked.
+    local trackerRow = pages:Row("pet", 2, L["Shard Tracker:"], nil)
+    controls.shardTracker = Widgets.CreateCheckbox(trackerRow, L["On"], function(checked)
+        ns.ShardTracker:Set(checked)
+    end, false)
+    controls.shardTracker:SetPoint("TOPLEFT", CONTROL_X, -2)
+
+    local trackerSizeRow = pages:Row("pet", 2, L["Tracker Size:"], nil)
+    controls.shardTrackerSize = Widgets.CreateChoice(trackerSizeRow, {
+        min = 75, max = 125, step = 25, value = 100,
+        format = function(percent) return ("%d%%"):format(percent) end,
+        onChange = function(percent) ns.ShardTracker:SetSize(percent) end,
+    })
+    ns.SettingsPages.FitStepper(controls.shardTrackerSize, { "75%", "100%", "125%" })
+    controls.shardTrackerSize:SetPoint("TOPLEFT", CONTROL_X, -2)
+
+    local trackerPlaceRow = pages:Row("pet", 2, L["Tracker Place:"], nil)
+    controls.shardTrackerReset = Widgets.CreateButton(trackerPlaceRow, L["Set Default"], function()
+        ns.ShardTracker:Reset()
+    end, { width = 110, height = 20 })
+    controls.shardTrackerReset:SetPoint("TOPLEFT", CONTROL_X, 0)
+
     -- The compendium on the left, the arrow that leads to its beasts on
     -- the right.
     pages:Section("compendium", 1, L["PET COMPENDIUM"])
@@ -608,6 +631,8 @@ function SettingsUI:Refresh()
     controls.quickFeed:SetChecked(ns.db.quickFeed ~= false)
     controls.soulShards:SetChecked(ns.db.soulShards == true)
     controls.stoneReminder:SetChecked(ns.db.stoneReminder == true)
+    controls.shardTracker:SetChecked(ns.db.shardTracker == true)
+    controls.shardTrackerSize:SetValue(ns.ShardTracker:Size(), true)
     controls.petXPBar:SetChecked(ns.db.petXPBar == true)
     controls.petXPBarWidth:SetValue(ns.PetXPBar:Width(), true)
     controls.petXPBarHeight:SetValue(ns.PetXPBar:Height(), true)

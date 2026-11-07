@@ -123,3 +123,10 @@ adds them again leaves them out.
   (`PetsTabs.host`, `Route`, `Closed`); Forever's PetsTabs has none of it.
 - Docking beside the auction house, mailbox, vendor and trainer (2026-10-30) is in the
   shared file, so Forever has none of it either.
+
+## Soul shards
+
+- Classic asks `SoulShards.CanMake()` for Drain Soul; Forever calls it
+  `KnowsDrainSoul()`. Classic's Pet tab chip still shows shards carried
+  before Drain Soul (the owner, 2026-10-26); Forever's shows nothing.
+  The Shard Tracker waits for Drain Soul in both.
