@@ -345,6 +345,9 @@ local DEFAULTS = {
     -- Soulstone is on nobody (Logic/Stones.lua). Off unless ticked.
     stoneReminder = false,
 
+    -- The Shard Tracker on screen (UI/ShardTracker.lua). Off unless ticked.
+    shardTracker = false,
+
     -- The Pet XP bar on screen (UI/PetXPBar.lua). Off unless ticked.
     petXPBar = false,
 

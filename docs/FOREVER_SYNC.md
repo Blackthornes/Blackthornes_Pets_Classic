@@ -58,6 +58,13 @@ Copied over since, one at a time:
   `UI/PetXPBar.lua` and `tools/test_petxpbar.lua` as they are, the Settings
   rows and all six languages' words. Classic has no Shard Tracker yet, so
   the files sit after `Logic/Stones.lua` and `UI/FeedButton.lua` in the TOC.
+- `350c7b7`, `4db29f2` The Shard Tracker for warlocks (2026-11-07, the
+  owner said build it from a mockup): `UI/ShardTracker.lua` and
+  `tools/test_shardtracker.lua`, Stones' counts and Soulstone holder, the
+  Settings rows and all six languages' words. It asks Classic's
+  `SoulShards.CanMake()` for Drain Soul; the test's last check is the
+  tracker going away without Drain Soul, since Classic's chip still shows
+  shards carried before it (see `docs/CLASSIC_DIFFERENCES.md`).
 
 Every catch-up reads `docs/CLASSIC_DIFFERENCES.md` first, and the PR that
 brings Forever commits over updates the line above to the newest one it took.

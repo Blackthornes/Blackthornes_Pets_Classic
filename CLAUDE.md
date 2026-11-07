@@ -356,6 +356,29 @@ xpbar [on|off|reset]`. Saved, account wide, never rename them: `petXPBar`,
 `petXPBarX`, `petXPBarY`. Tested in `tools/test_petxpbar.lua`. Not yet seen
 in game.
 
+## The Shard Tracker
+
+The owner said build it (2026-11-07, from a mockup; Forever's `350c7b7`
+and `4db29f2` brought over): a movable strip on screen in the gold plaque
+look, a slot each for soul shards and, once Create Healthstone or Create
+Soulstone is learned, Healthstones and Soulstones in the bags. Nothing
+shows until Drain Soul is learned (`SoulShards.CanMake`, Classic's name
+for Forever's `KnowsDrainSoul`), and only for a warlock. Shards go red at
+`SoulShards.LOW`; an empty stone is grey; a gold dot on the Soulstone
+while it is on someone, the hover naming them (`Stones:SoulstoneHolderName`).
+A count going up pops with a gold ring, going down dips; a new slot slides
+in; the rim breathes on Effects Full, still on Subtle and Off.
+`UI/ShardTracker.lua` (`BlackthornesPetsShardTracker`) builds its look
+from `UI/Plaque.lua`'s colours without changing that shared file; events
+only while on, coalesced `SETTLE`. Off unless ticked: "Shard Tracker:",
+"Tracker Size:" (75, 100 or 125) and "Tracker Place:" Set Default under
+WARLOCK on the Pet page, and `/bpet tracker [on|off|reset]`. Drag to move,
+right-click puts it back. Saved, account wide, never rename them:
+`shardTracker`, `shardTrackerScale` (nil for 100), `shardTrackerX`/
+`shardTrackerY` (its bottom left in screen units, so a new size keeps it).
+`Stones.SOULSTONES` are Classic's item IDs. Tested in
+`tools/test_shardtracker.lua`. Not yet seen in game.
+
 ## Healthstone and Soulstone reminder
 
 The owner said yes (2026-10-24): once a fight ends, a warlock who can make
