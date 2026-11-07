@@ -23,6 +23,14 @@ tell a friend: no hype, no questions to the reader, no exclamation marks
 outside the thanks line, no dashes as punctuation, no "now you can". The
 tool prints a note for a shipped line that reads like an advert.
 
+## 0.9.0
+
+- A new pet XP bar shows your hunter pet's progress.
+- A new Shard Tracker shows a warlock's soul shards and stones.
+
+Fixes and changes:
+- Various bug fixes.
+
 ## 0.8.5
 
 Fixes and changes:

@@ -4,6 +4,12 @@ Versions follow [semantic versioning](https://semver.org): the middle number
 moves for new behaviour, the last for fixes alone. The newest version goes at
 the top; a release is refused if its version has no section here.
 
+## 0.9.0
+
+- A new pet XP bar shows your hunter pet's progress.
+- A new Shard Tracker shows a warlock's soul shards and stones.
+- Various bug fixes.
+
 ## 0.8.5
 
 - Various bug fixes.
