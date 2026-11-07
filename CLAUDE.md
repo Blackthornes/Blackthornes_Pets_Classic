@@ -339,6 +339,23 @@ nothing. Nothing warns until the warlock knows Drain Soul, any rank
 (`SoulShards.CanMake`, `DRAIN_SOUL`, read each time); before then the chip
 shows only while shards are carried (the owner, 2026-10-26). Tested in `tools/test_soulshards.lua`. Not yet seen in game.
 
+## The Pet XP bar
+
+A player asked, the owner said build it from a mockup (2026-11-07, from
+Forever's `49df97c`): a hunter's pet's XP on screen, Farmer's XP bar look.
+A gold fill in dark glass with a gold rim, a tick every tenth, a white mark
+where this session started, the pet's name and level above, this session's
+XP and XP an hour under it, and a dark glass card on hover (XP to the next
+level, about how many kills and minutes, this session, the player's level).
+A level-up cheer follows Effects, with no sound. `Logic/PetXP.lua` reads
+`GetPetExperience` in a pcall and keeps the session in memory only, one per
+pet name; `UI/PetXPBar.lua` is our own frame on UIParent, hidden with no
+pet or a demon. Off unless ticked: PET XP BAR on the Pet page and `/bpet
+xpbar [on|off|reset]`. Saved, account wide, never rename them: `petXPBar`,
+`petXPBarWidth`, `petXPBarHeight`, `petXPBarWords`, `petXPBarCheer`,
+`petXPBarX`, `petXPBarY`. Tested in `tools/test_petxpbar.lua`. Not yet seen
+in game.
+
 ## Healthstone and Soulstone reminder
 
 The owner said yes (2026-10-24): once a fight ends, a warlock who can make

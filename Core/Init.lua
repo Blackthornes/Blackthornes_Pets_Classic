@@ -345,6 +345,9 @@ local DEFAULTS = {
     -- Soulstone is on nobody (Logic/Stones.lua). Off unless ticked.
     stoneReminder = false,
 
+    -- The Pet XP bar on screen (UI/PetXPBar.lua). Off unless ticked.
+    petXPBar = false,
+
     -- Food that gives a buff (stat food) is always fed last; ticked, it is
     -- never fed at all.
     neverFeedBuffFood = false,
