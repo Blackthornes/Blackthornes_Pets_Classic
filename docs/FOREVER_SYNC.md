@@ -52,7 +52,12 @@ Copied over since, one at a time:
   in all five Classic repos), `78ab8d8` buff food is no longer fed as plain
   food, and `62d6cc8` food is found when the game names the diet in French,
   Spanish, Russian or Chinese (its `Logic/Food.lua` words added by hand).
-  The Pet XP bar and the other commits since `9a174be` are not taken yet.
+  The other commits since `9a174be` are not taken yet.
+- `49df97c`, `1dcda59`, `7843890` The Pet XP bar for hunters (2026-11-07,
+  the owner said build it from a mockup): `Logic/PetXP.lua`,
+  `UI/PetXPBar.lua` and `tools/test_petxpbar.lua` as they are, the Settings
+  rows and all six languages' words. Classic has no Shard Tracker yet, so
+  the files sit after `Logic/Stones.lua` and `UI/FeedButton.lua` in the TOC.
 
 Every catch-up reads `docs/CLASSIC_DIFFERENCES.md` first, and the PR that
 brings Forever commits over updates the line above to the newest one it took.
