@@ -5,6 +5,10 @@
 local _, ns = ...
 
 ns.WHATS_NEW = {
+    { version = "0.9.0", lines = {
+        "A new pet XP bar shows your hunter pet's progress.",
+        "A new Shard Tracker shows a warlock's soul shards and stones.",
+    } },
     { version = "0.8.0", lines = {
         "Item icons now have a ring and a name colour that match their quality.",
         "Stack counts show on the corner of item icons.",
@@ -14,8 +18,5 @@ ns.WHATS_NEW = {
     { version = "0.7.0", lines = {
         "All your Blackthornes add-ons now open in one window, with a button for each add-on down the side.",
         "The window moves beside the auction house, mailbox, vendor and trainer when you open them.",
-    } },
-    { version = "0.6.0", lines = {
-        "Every window has a new look that matches the other Blackthornes add-ons.",
     } },
 }
