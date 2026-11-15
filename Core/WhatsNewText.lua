@@ -5,6 +5,12 @@
 local _, ns = ...
 
 ns.WHATS_NEW = {
+    { version = "0.10.0", lines = {
+        "Feeding waits until your pet has finished eating.",
+        "Shard Tracker stones can be clicked to make or use them.",
+        "Mute All Sounds quiets every Blackthornes sound at once.",
+        "Windows remember where you drag them.",
+    } },
     { version = "0.9.0", lines = {
         "A new pet XP bar shows your hunter pet's progress.",
         "A new Shard Tracker shows a warlock's soul shards and stones.",
@@ -14,9 +20,5 @@ ns.WHATS_NEW = {
         "Stack counts show on the corner of item icons.",
         "Items show a small mark and colour for what to do with them.",
         "Demon book prices show in gold, silver and copper coins.",
-    } },
-    { version = "0.7.0", lines = {
-        "All your Blackthornes add-ons now open in one window, with a button for each add-on down the side.",
-        "The window moves beside the auction house, mailbox, vendor and trainer when you open them.",
     } },
 }
