@@ -4,6 +4,14 @@ Versions follow [semantic versioning](https://semver.org): the middle number
 moves for new behaviour, the last for fixes alone. The newest version goes at
 the top; a release is refused if its version has no section here.
 
+## 0.10.0
+
+- Feeding waits until your pet has finished eating.
+- Shard Tracker stones can be clicked to make or use them.
+- Mute All Sounds quiets every Blackthornes sound at once.
+- Windows remember where you drag them.
+- Various bug fixes.
+
 ## 0.9.0
 
 - A new pet XP bar shows your hunter pet's progress.
