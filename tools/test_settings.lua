@@ -85,6 +85,18 @@ suite.check("unticking it turns the note off", ns.db.sisterNote == false)
 ns.HandleSlash("sisters")
 suite.check("/bpet sisters turns it back on", ns.db.sisterNote == true and controls.sisters:GetChecked())
 
+-- Mute All Sounds: the box, the command and every sister agree.
+suite.check("Mute All Sounds starts off", not ns.Muted() and not controls.muteSounds:GetChecked())
+controls.muteSounds:GetScript("OnClick")(controls.muteSounds)
+suite.check("ticked, every Blackthornes sound is muted", ns.Muted() == true
+    and ns.db.muteSounds == true and type(ns.db.muteSoundsAt) == "number")
+ns.HandleSlash("mute off")
+suite.check("/bpet mute off plays them again", ns.Muted() == false and ns.db.muteSounds == false)
+ns.HandleSlash("mute")
+suite.check("/bpet mute alone flips it", ns.Muted() == true)
+ns.HandleSlash("mute off")
+suite.check("and back off", ns.Muted() == false)
+
 -- The pages along the top, as Tradeskills' Settings tab has them.
 local pages = SettingsUI.pages
 suite.check("it opens on the first page", pages.shown == "pet")
@@ -210,12 +222,15 @@ local realPrint = ns.Print
 ns.Print = function(...) printed[#printed + 1] = table.concat({ ... }, " ") end
 controls.resetPositions:GetScript("OnClick")(controls.resetPositions)
 ns.Print = realPrint
-suite.check("Set Default says so in chat", printed[1] == "UI windows set to defaults.", printed[1])
+suite.check("Set Default says so in chat", printed[1] == "Every window is back in its first spot.", printed[1])
 
 -- Position.
 ns.db.settingsX = 400
 SettingsUI:ResetPositions()
 suite.check("putting it back forgets where it was dragged", ns.db.settingsX == nil)
+ns.db.settingsX = 400
+ns.commands.windows.fn("reset")
+suite.check("/bpet windows reset puts it back too", ns.db.settingsX == nil)
 
 -- A client with neither options API still loads.
 local ns2 = env.Load()
