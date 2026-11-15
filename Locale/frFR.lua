@@ -591,3 +591,9 @@ L["Click to use it."] = "Clique pour l'utiliser."
 L["Click to hold it in your off hand."] = "Clique pour la tenir en main gauche."
 L["You are holding one."] = "Tu en tiens déjà une."
 L["Click to put it on your target, or on you."] = "Clique pour la poser sur ta cible, ou sur toi."
+
+-- Mute All Sounds (2026-11-12)
+L["Mute All Sounds:"] = "Couper tous les sons :"
+L["turn every Blackthornes sound off or back on (on/off)"] = "couper ou remettre tous les sons Blackthornes (on/off)"
+L["All Blackthornes sounds are off. /bpet mute off turns them back on."] = "Tous les sons Blackthornes sont coupés. /bpet mute off les remet."
+L["Blackthornes sounds are back on."] = "Les sons Blackthornes sont de retour."

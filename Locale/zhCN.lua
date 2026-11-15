@@ -590,3 +590,9 @@ L["Click to use it."] = "点击使用。"
 L["Click to hold it in your off hand."] = "点击装备到副手。"
 L["You are holding one."] = "你已经拿着一个。"
 L["Click to put it on your target, or on you."] = "点击放到你的目标身上，或你自己身上。"
+
+-- Mute All Sounds (2026-11-12)
+L["Mute All Sounds:"] = "全部静音："
+L["turn every Blackthornes sound off or back on (on/off)"] = "关闭或重新打开所有 Blackthornes 音效（on/off）"
+L["All Blackthornes sounds are off. /bpet mute off turns them back on."] = "所有 Blackthornes 音效已关闭。输入 /bpet mute off 可重新打开。"
+L["Blackthornes sounds are back on."] = "Blackthornes 音效已重新打开。"
