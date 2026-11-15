@@ -130,3 +130,11 @@ adds them again leaves them out.
   `KnowsDrainSoul()`. Classic's Pet tab chip still shows shards carried
   before Drain Soul (the owner, 2026-10-26); Forever's shows nothing.
   The Shard Tracker waits for Drain Soul in both.
+- The Shard Tracker's Firestone slot uses Classic's Firestone items (1254,
+  13699, 13700, 13701) and Create Firestone ranks (6366, 17951, 17952,
+  17953).
+
+## Feeding
+
+- The eating check reads the Feed Pet effect's name with `GetSpellInfo`
+  where Era has no `C_Spell.GetSpellName`.

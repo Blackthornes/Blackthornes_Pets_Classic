@@ -66,5 +66,21 @@ Copied over since, one at a time:
   tracker going away without Drain Soul, since Classic's chip still shows
   shards carried before it (see `docs/CLASSIC_DIFFERENCES.md`).
 
+- Weekly picks (2026-11-15, the owner said yes):
+  - `4e40c40` the Pet XP bar grows to fit its words, as it is.
+  - `308d9a9` the Feed buttons and the Pet care key wait while the pet is
+    still eating. Its spell name reads `GetSpellInfo` where Era has no
+    `C_Spell`.
+  - `ca72069` Shard Tracker stones are clickable, with a Firestone slot and
+    no red end gems. The Firestone items and Create Firestone ranks are
+    Classic's IDs.
+  - `9ced5ce` Mute All Sounds (`UI/SharedChoices.lua` as it is, the same in
+    all five Classic repos).
+  - `0487b29` windows remember where they were dragged, and Window Spots:
+    Set Default (`UI/SharedWindow.lua` FILE_VERSION 9, `UI/WhatsNew.lua`
+    FILE_VERSION 7 and `tools/test_sharedwindow.lua`, copied from
+    Equipment Classic so all five stay the same; the test uses Era's
+    `AuctionFrame`).
+
 Every catch-up reads `docs/CLASSIC_DIFFERENCES.md` first, and the PR that
 brings Forever commits over updates the line above to the newest one it took.
