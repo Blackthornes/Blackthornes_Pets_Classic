@@ -178,3 +178,13 @@ an ID will do:
   falls back on the ID, and `Waypoints:DataZone` turns the client's zone
   name into the data's for the beast arrow (`BeastArrow:Here`) and a
   tame's home (`TameRecord:Where`).
+
+## Feed Pet Effect (2026-11-15, not yet seen in game)
+
+The feed hold reads the pet's buffs for Feed Pet Effect, Classic's spell
+1539 (about 20 seconds after a feed), by spell ID or the client's name for
+it (`C_Spell.GetSpellName(1539)`, else `GetSpellInfo`), through
+`C_UnitAuras.GetAuraDataByIndex("pet", i, "HELPFUL")`, else `UnitBuff`,
+all in a pcall. Feed the pet and run `/bpet probe` within 20 seconds; the
+"feed effect name", "feed effect on pet" and "aura calls" lines say what
+the client gives. A buff that can't be read never holds feeding.
